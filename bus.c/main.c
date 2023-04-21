@@ -10,7 +10,7 @@ int main()
     printf("--------------------------------------------\n");
     do
     {
-        printf("\n\tMenu:\n1. Realizar reserva\n2. Excluir reserva\n3. Listar reserva\n4. Buscar reserva\n5. Editar reserva\n6. Consultar vagas disponiveis para uma dada origem - destino\n7. Consultar quantitaticos de passageiros\n8. Sair\n\n");
+        printf("\n\tMenu:\n1. Realizar reserva\n2. Excluir reserva\n3. Listar reserva\n4. Buscar reserva\n5. Editar reserva\n6. Consultar vagas disponiveis para uma dada origem - destino\n7. Consultar quantitativos de passageiros\n8. Sair\n\n");
         printf("Sua opcao: ");
         scanf("%d", &option);
         system("cls");
