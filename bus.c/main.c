@@ -2,8 +2,8 @@
 
 int main()
 {
-    int arrSize = 0; // inital array size
-    Tickets *t[arrSize];
+    Ticket *t;
+    t = start();
     int option;
     char name[50], origin[50], destination[50];
 
@@ -27,9 +27,9 @@ int main()
             printf("Informe seu destino: ");
             scanf(" %[^\n]s", destination);
 
-            t[arrSize] = makeReservation(&name, &origin, &destination);
-            arrSize++;
+            makeReservation(t, name, origin, destination);
 
+            printf("\nReserva realizada com sucesso!\n");
             break;
         case 2:
             printf("Excluindo reserva...\n\n");

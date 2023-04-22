@@ -18,18 +18,43 @@ struct tickets
     char origin[50];
     char destination[50];
     char busName[50];
+
+    Tickets *next;
 };
 
-Tickets *makeReservation(char *name, char *origin, char *destination)
+struct ticket
+{
+    Tickets *first;
+};
+
+Ticket *start()
+{
+    Ticket *t = (Ticket *)malloc(sizeof(Ticket));
+    if (t == NULL)
+    {
+        printf("Erro na alocação!\n");
+        exit(1);
+    }
+    t->first = NULL;
+
+    return t;
+}
+
+void makeReservation(Ticket *l, char *name, char *origin, char *destination)
 {
     Tickets *t = (Tickets *)malloc(sizeof(Tickets));
+    if (t == NULL)
+    {
+        printf("Erro na alocação!\n");
+        exit(1);
+    }
     strcpy(t->passengerName, name);
     strcpy(t->origin, origin);
     strcpy(t->destination, destination);
+    t->next = l->first;
+    l->first = t;
 
     writePassenger(name, origin, destination); // call the function to write data to a file
-
-    return t;
 }
 
 void writePassenger(char *name, char *origin, char *destination)
