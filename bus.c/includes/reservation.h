@@ -1,4 +1,5 @@
 typedef struct bus Bus;
 typedef struct tickets Tickets;
 
-Tickets *makeReservation(char name[50], char origin[50], char destination[50]);
+Tickets *makeReservation(char *name, char *origin, char *destination);
+void writePassenger(char *name, char *origin, char *destination);
