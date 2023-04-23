@@ -2,8 +2,7 @@
 
 int main()
 {
-    Ticket *t;
-    t = start();
+    Ticket *t = t = start();
     int option;
     char name[50], origin[50], destination[50];
 
@@ -12,7 +11,7 @@ int main()
     printf("--------------------------------------------\n");
     do
     {
-        printf("\nMenu:\n1. Realizar reserva\n2. Excluir reserva\n3. Listar reserva\n4. Buscar reserva\n5. Editar reserva\n6. Consultar vagas disponiveis para uma dada origem - destino\n7. Consultar quantitativos de passageiros\n8. Sair\n\n");
+        printf("Menu:\n1. Realizar reserva\n2. Excluir reserva\n3. Listar reserva\n4. Buscar reserva\n5. Editar reserva\n6. Consultar vagas disponiveis para uma dada origem - destino\n7. Consultar quantitativos de passageiros\n8. Sair\n\n");
         printf("Digite uma opcao: ");
         scanf("%d", &option);
         system("cls");
@@ -36,6 +35,8 @@ int main()
             break;
         case 3:
             printf("Listando reserva...\n\n");
+
+            showReservation(t);
             break;
         case 4:
             printf("Buscando reserva...\n\n");

@@ -1,8 +1,8 @@
 Nome: Heitor
 Origem: Parana
-Destino: Alexandria
+Destino: Pau dos Ferros
 
 Nome: Caio
 Origem: Alexandria
-Destino: Natal
+Destino: Pau dos Ferros
 
