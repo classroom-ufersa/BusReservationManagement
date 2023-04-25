@@ -17,7 +17,7 @@ struct tickets // Definindo a estrutura de bilhetes
     char passengerName[50];
     char origin[50];
     char destination[50];
-    char busNum[50];
+    int busNum[50];
 
     Tickets *next;
 };
