@@ -17,7 +17,7 @@ struct tickets // Definindo a estrutura de bilhetes
     char passengerName[50];
     char origin[50];
     char destination[50];
-    char busName[50];
+    char busNum[50];
 
     Tickets *next;
 };
@@ -67,6 +67,42 @@ void writePassenger(char *name, char *origin, char *destination)
     }
     fprintf(f, "Nome: %s\nOrigem: %s\nDestino: %s\n\n", name, origin, destination); // Escreve os dados do passageiro no arquivo
     fclose(f);                                                                      // Fecha o arquivo
+}
+
+void deleteReservation(Ticket *t, char *nome)
+{
+    if(t->first == NULL )//para verificar se a lista esta vazia
+    {  
+        printf("Nao ha reservas cadastradas!");
+    } 
+    
+    Tickets *prev = NULL;
+    Tickets *curr = t->first;
+
+    while (curr != NULL && strcmp(curr->passengerName, nome) != 0) // Procure o bilhete com o nome indicado
+    {
+        prev = curr;
+        curr = curr->next;
+    }
+
+     if (curr == NULL) // Se o bilhete não foi encontrado
+    {
+        printf("Nao foi possivel encontrar uma reserva com o nome '%s'\n", nome);
+        return;
+    }
+
+    if (prev == NULL) // Se o bilhete é o primeiro na lista
+    {
+        t->first = curr->next;
+    }
+    else // Se o bilhete não é o primeiro na lista
+    {
+        prev->next = curr->next;
+    }
+
+    printf("A reserva de %s de %s para %s foi cancelada!\n", curr->passengerName, curr->origin, curr->destination);
+
+    free(curr); // Libera a memória alocada para o bilhete excluído
 }
 
 void showReservation(Ticket *t)

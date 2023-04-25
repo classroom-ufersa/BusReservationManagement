@@ -32,6 +32,11 @@ int main()
             break;
         case 2:
             printf("Excluindo reserva...\n\n");
+            printf("informe o nome do passageiro: ");
+            scanf(" %[^\n]s", name);
+
+            deleteReservation(t, name);
+
             break;
         case 3:
             printf("Listando reserva...\n\n");
