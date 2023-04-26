@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "reservation.h" // inclui a definição das estruturas e protótipos das funções
 
@@ -40,6 +41,33 @@ Ticket *start() // Função para criar uma nova instância da estrutura ticket e
     return t; // Retorna a nova instância da estrutura ticket
 }
 
+Ticket *capturePassenger(Ticket *l) 
+{
+    char name[51], origin[51], destination[51];
+    FILE *f = fopen("../service/data.txt", "r");
+    if (f == NULL)
+    {
+        printf("Erro ao abrir o arquivo!\n");
+        exit(1);
+    }
+
+    Tickets *t = NULL;
+    t = l->first;
+    
+    while (!feof(f) && t != NULL)
+    {
+        fscanf(f, "%s\n%s\n%s\n\n", name, origin, destination);
+        strcpy(t->passengerName, name);
+        strcpy(t->origin, origin);
+        strcpy(t->destination, destination);
+
+        t = t->next;
+    }
+
+    fclose(f);
+    return t;
+}
+
 void makeReservation(Ticket *l, char *name, char *origin, char *destination) // Função para criar um novo bilhete e adicioná-lo à lista encadeada de bilhetes
 {
     Tickets *t = (Tickets *)malloc(sizeof(Tickets));
@@ -48,11 +76,11 @@ void makeReservation(Ticket *l, char *name, char *origin, char *destination) // 
         printf("Erro na alocação!\n");
         exit(1);
     }
-    strcpy(t->passengerName, name);      // Copia o nome do passageiro para o bilhete
-    strcpy(t->origin, origin);           // Copia a origem para o bilhete
-    strcpy(t->destination, destination); // Copia o destinatario para o bilhete
-    t->next = l->first;                  // Configura o ponteiro next do novo bilhete para apontar para o primeiro bilhete da lista
-    l->first = t;                        // Chama a função para escrever os dados do passageiro em um arquivo
+    strcpy(t->passengerName, name);
+    strcpy(t->origin, origin);
+    strcpy(t->destination, destination);
+    t->next = l->first;
+    l->first = t;
 
     writePassenger(name, origin, destination); // call the function to write data to a file
 }
@@ -65,17 +93,17 @@ void writePassenger(char *name, char *origin, char *destination)
         printf("Erro ao abrir o arquivo!\n");
         exit(1);
     }
-    fprintf(f, "Nome: %s\nOrigem: %s\nDestino: %s\n\n", name, origin, destination); // Escreve os dados do passageiro no arquivo
-    fclose(f);                                                                      // Fecha o arquivo
+    fprintf(f, "%s\n%s\n%s\n\n", name, origin, destination); // Escreve os dados do passageiro no arquivo
+    fclose(f);                                             // Fecha o arquivo
 }
 
 void deleteReservation(Ticket *t, char *nome)
 {
-    if(t->first == NULL )//para verificar se a lista esta vazia
-    {  
-        printf("Nao ha reservas cadastradas!");
-    } 
-    
+    if (t->first == NULL) // para verificar se a lista esta vazia
+    {
+        printf("Nao ha reservas cadastradas!\n");
+    }
+
     Tickets *prev = NULL;
     Tickets *curr = t->first;
 
@@ -85,7 +113,7 @@ void deleteReservation(Ticket *t, char *nome)
         curr = curr->next;
     }
 
-     if (curr == NULL) // Se o bilhete não foi encontrado
+    if (curr == NULL) // Se o bilhete não foi encontrado
     {
         printf("Nao foi possivel encontrar uma reserva com o nome '%s'\n", nome);
         return;
@@ -109,10 +137,28 @@ void showReservation(Ticket *t)
 {
     if (t->first == NULL) // Checks if list is empty
     {
-        printf("Nao ha reservas cadastradas!");
+        printf("Nao ha reservas cadastradas!\n\n");
     }
     for (Tickets *i = t->first; i != NULL; i = i->next)
     {
         printf("Nome do passageiro: %s\nOrigem: %s\nDestino: %s\n\n", i->passengerName, i->origin, i->destination);
+    }
+}
+
+void seekReservation(Ticket *t, char *nome) // Função de busca
+{
+    if (t->first == NULL) // Verifica se a lista está vazia
+    {
+        printf("Nao ha reservas cadastradas!");
+        return;
+    }
+    Tickets *b;
+    for (b = t->first; b != NULL; b = b->next)
+    {
+        if (strcmp(b->passengerName, nome) == 0)
+        {
+            printf("\nNome do passageiro: %s\nOrigem: %s\nDestino: %s\n\n", b->passengerName, b->origin, b->destination);
+            return;
+        }
     }
 }
