@@ -27,7 +27,7 @@ int main()
             printf("Informe seu nome: ");
             scanf(" %[^\n]s", name);
 
-            showAvaliableBus(b); // mostra os onibus disponiveis para reserva
+            showBus(b); // mostra os onibus disponiveis para reserva
 
             printf("\nInforme o numero do onibus: ");
             scanf("%d", &number);
@@ -51,6 +51,7 @@ int main()
             scanf("%d", &number);
 
             printf("\nPassageiros com reservas no onibus %d\n", number);
+
             showReservation(t, number);
             break;
         case 4:
@@ -61,9 +62,17 @@ int main()
             break;
         case 6:
             printf("Consultando vagas disponiveis...\n\n");
+            printf("Informe o numero do onibus: ");
+            scanf("%d", &number);
+
+            showAvaliableVacancies(b, number);
             break;
         case 7:
             printf("Consultando quantitativos de passageiros...\n\n");
+            printf("Informe o numero do onibus: ");
+            scanf("%d", &number);
+
+            showPassengerQuantity(b, number);
             break;
         case 8:
             printf("Saindo...\n");

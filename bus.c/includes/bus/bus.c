@@ -31,11 +31,35 @@ Bus *registerBus(Bus *b, int number, int vacancies, char *origin, char *destinat
     return newBus;
 }
 
-void showAvaliableBus(Bus *b)
+void showBus(Bus *b)
 {
     Bus *bus = (Bus *)malloc(sizeof(Bus));
     for (bus = b; bus != NULL; bus = bus->next)
     {
         printf("\nNumero do onibus: %d\tNumero de vagas: %d\tOrigem-Destino: %s -> %s", bus->number, bus->vacancies, bus->origin, bus->destination);
+    }
+}
+
+void showAvaliableVacancies(Bus *b, int num)
+{
+    Bus *bus = (Bus *)malloc(sizeof(Bus));
+    for (bus = b; bus != NULL; bus = bus->next)
+    {
+        if (bus->number == num)
+        {
+            printf("Vagas disponiveis para o onibus %d: %d\n", bus->number, bus->vacancies);
+        }
+    }
+}
+
+void showPassengerQuantity(Bus *b, int num)
+{
+    Bus *bus = (Bus *)malloc(sizeof(Bus));
+    for (bus = b; bus != NULL; bus = bus->next)
+    {
+        if (num == bus->number)
+        {
+            printf("Quantidade de passageiros presentes no onibus %d: %d\n", bus->number, 20 - bus->vacancies);
+        }
     }
 }
