@@ -16,7 +16,7 @@ int main()
 
     do
     {
-        printf("Menu:\n1. Realizar reserva\n2. Excluir reserva\n3. Listar reserva\n4. Buscar reserva\n5. Editar reserva\n6. Consultar vagas disponiveis para uma dada origem - destino\n7. Consultar quantitativos de passageiros\n8. Sair\n\n");
+        printf("\nMenu:\n1. Realizar reserva\n2. Excluir reserva\n3. Listar reserva\n4. Buscar reserva\n5. Editar reserva\n6. Consultar vagas disponiveis para uma dada origem - destino\n7. Consultar quantitativos de passageiros\n8. Sair\n\n");
         printf("Digite uma opcao: ");
         scanf("%d", &option);
         system("cls");
@@ -34,11 +34,16 @@ int main()
 
             t = makeReservation(t, b, number, name);
 
-            printf("\nReserva realizada com sucesso!\n\n");
+            printf("\nReserva realizada com sucesso!\n");
             break;
         case 2:
-            printf("Excluindo reserva...\n\n");
+            printf("\nExcluindo reserva...\n");
+            printf("Informe seu nome: ");
+            scanf(" %[^\n]s", name);            
 
+            t = deleteReservation(t, name);
+
+            printf("\nReserva excluida com sucesso!\n");
             break;
         case 3:
             printf("Listando reserva...\n\n");

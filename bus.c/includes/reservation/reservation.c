@@ -58,5 +58,33 @@ void showReservation(Tickets *t, int number)
         {
             printf("Nome: %s\n", ticket->passengerName);
         }
-    } 
+    }
+}
+
+Tickets *deleteReservation(Tickets *t, char *name)
+{
+    Tickets *prev = NULL;
+    Tickets *ticket = t;
+
+    while ((strcmp(ticket->passengerName, name)))
+    {
+        if (ticket == NULL)
+        {
+            return ticket; // não achou a reserva
+        }
+        
+        prev = ticket;
+        ticket = ticket->next;
+    }
+
+    if (prev == NULL)
+    {
+        t = ticket->next;
+    }
+    else {
+        prev->next = ticket->next;
+    }
+
+    free(ticket);
+    return t;
 }
