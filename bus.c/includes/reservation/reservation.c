@@ -20,7 +20,7 @@ Tickets *start() // função para criar uma nova instância da estrutura ticket 
     return NULL;
 }
 
-Tickets *makeReservation(Tickets *l, Bus *b, int number) // função para criar um novo bilhete e adicioná-lo à lista encadeada de bilhetes
+Tickets *makeReservation(Tickets *l, Bus *b, int number, char *name) // função para criar um novo bilhete e adicioná-lo à lista encadeada de bilhetes
 {
     Tickets *ticket = (Tickets *)malloc(sizeof(Tickets));
     Bus *bus = (Bus *)malloc(sizeof(Bus));
@@ -36,6 +36,7 @@ Tickets *makeReservation(Tickets *l, Bus *b, int number) // função para criar 
         {
             strcpy(ticket->origin, bus->origin);
             strcpy(ticket->destination, bus->destination);
+            strcpy(ticket->passengerName, name);
             ticket->busNum = bus->number;
 
             bus->vacancies--; // diminui a quantidade de vagas
@@ -46,4 +47,16 @@ Tickets *makeReservation(Tickets *l, Bus *b, int number) // função para criar 
     }
 
     return NULL;
+}
+
+void showReservation(Tickets *t, int number)
+{
+    Tickets *ticket = (Tickets *)malloc(sizeof(Tickets));
+    for (ticket = t; ticket != NULL; ticket = ticket->next)
+    {
+        if (number == ticket->busNum)
+        {
+            printf("Nome: %s\n", ticket->passengerName);
+        }
+    } 
 }

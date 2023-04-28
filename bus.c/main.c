@@ -32,7 +32,7 @@ int main()
             printf("\nInforme o numero do onibus: ");
             scanf("%d", &number);
 
-            t = makeReservation(t, b, number);
+            t = makeReservation(t, b, number, name);
 
             printf("\nReserva realizada com sucesso!\n\n");
             break;
@@ -42,7 +42,11 @@ int main()
             break;
         case 3:
             printf("Listando reserva...\n\n");
+            printf("Informe o numero do onibus: ");
+            scanf("%d", &number);
 
+            printf("\nPassageiros com reservas no onibus %d\n", number);
+            showReservation(t, number);
             break;
         case 4:
             printf("Buscando reserva...\n\n");

@@ -2,4 +2,5 @@
 typedef struct tickets Tickets;
 
 Tickets *start();
-Tickets *makeReservation(Tickets *l, Bus *b, int number);
+Tickets *makeReservation(Tickets *l, Bus *b, int number, char *name);
+void showReservation(Tickets *t, int number);
