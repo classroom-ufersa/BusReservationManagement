@@ -1,5 +1,4 @@
-#include "includes/reservation.c"
-//#include "includes/bus.c"
+#include "includes/reservation/reservation.c"
 
 int main()
 {
@@ -13,29 +12,29 @@ int main()
     printf("--------------------------------------------\n");
 
     b = registerBus(b, 1, 20, "Alexandria", "Natal");
+    b = registerBus(b, 2, 20, "Parana", "Uirauna");
 
     do
     {
         printf("Menu:\n1. Realizar reserva\n2. Excluir reserva\n3. Listar reserva\n4. Buscar reserva\n5. Editar reserva\n6. Consultar vagas disponiveis para uma dada origem - destino\n7. Consultar quantitativos de passageiros\n8. Sair\n\n");
         printf("Digite uma opcao: ");
         scanf("%d", &option);
-        // system("cls");
+        system("cls");
         switch (option)
         {
         case 1:
-            printf("Realizando reserva...\n\n");
+            printf("\nRealizando reserva...\n");
             printf("Informe seu nome: ");
             scanf(" %[^\n]s", name);
 
-            showAvaliableBus(b);
+            showAvaliableBus(b); // mostra os onibus disponiveis para reserva
 
             printf("\nInforme o numero do onibus: ");
             scanf("%d", &number);
 
             t = makeReservation(t, b, number);
-            printf("%s", t->origin);
 
-            printf("\nReserva realizada com sucesso!\n");
+            printf("\nReserva realizada com sucesso!\n\n");
             break;
         case 2:
             printf("Excluindo reserva...\n\n");

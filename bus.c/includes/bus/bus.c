@@ -1,10 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "bus.h"
 
-struct bus // Defininido a estrutura onibus
+struct bus // defininido a estrutura onibus
 {
     int number;
     int vacancies;
@@ -37,5 +33,9 @@ Bus *registerBus(Bus *b, int number, int vacancies, char *origin, char *destinat
 
 void showAvaliableBus(Bus *b)
 {
-    printf("\nNumero do onibus: %d\nNumero de vagas: %d\nOrigem: %s\nDestino: %s", b->number, b->vacancies, b->origin, b->destination);
+    Bus *bus = (Bus *)malloc(sizeof(Bus));
+    for (bus = b; bus != NULL; bus = bus->next)
+    {
+        printf("\nNumero do onibus: %d\tNumero de vagas: %d\tOrigem-Destino: %s -> %s", bus->number, bus->vacancies, bus->origin, bus->destination);
+    }
 }
