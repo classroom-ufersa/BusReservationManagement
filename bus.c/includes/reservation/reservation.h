@@ -1,4 +1,4 @@
-#include "bus.h"
+#include "../bus/bus.h"
 typedef struct tickets Tickets;
 
 Tickets *start();
