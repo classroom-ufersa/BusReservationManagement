@@ -42,18 +42,25 @@ void showBus(Bus *b)
 
 void showAvaliableVacancies(Bus *b, int num)
 {
+    int found = 0;
     Bus *bus = (Bus *)malloc(sizeof(Bus));
     for (bus = b; bus != NULL; bus = bus->next)
     {
         if (bus->number == num)
         {
             printf("Vagas disponiveis para o onibus %d: %d\n", bus->number, bus->vacancies);
+            found = 1;
         }
+    }
+    if (!found)
+    {
+        printf("\nNumero do onibus inexistente!\n");
     }
 }
 
 void showPassengerQuantity(Bus *b, int num)
 {
+    int found = 0;
     Bus *bus = (Bus *)malloc(sizeof(Bus));
     for (bus = b; bus != NULL; bus = bus->next)
     {
@@ -61,5 +68,21 @@ void showPassengerQuantity(Bus *b, int num)
         {
             printf("Quantidade de passageiros presentes no onibus %d: %d\n", bus->number, 20 - bus->vacancies);
         }
+    }
+    if (!found)
+    {
+        printf("\nNumero do onibus inexistente!\n");
+    }
+}
+
+void freeBus(Bus *b)
+{
+    Bus *bus = b;
+    Bus *aux;
+    while (bus != NULL)
+    {
+        aux = bus->next;
+        free(bus);
+        bus = aux;
     }
 }

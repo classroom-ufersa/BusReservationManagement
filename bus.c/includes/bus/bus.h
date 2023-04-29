@@ -5,3 +5,4 @@ Bus *registerBus(Bus *b, int number, int vacancies, char *origin, char *destinat
 void showBus(Bus *b);
 void showAvaliableVacancies(Bus *b, int num);
 void showPassengerQuantity(Bus *b, int num);
+void freeBus(Bus *b);
