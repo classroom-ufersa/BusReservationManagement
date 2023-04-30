@@ -11,6 +11,8 @@ int main()
     int option, number, vacancies = 10;
     char name[50];
 
+    t = readFile();
+
     printf("--------------------------------------------\n");
     printf("Boas vindas ao sistema de reserva de onibus!\n");
     printf("--------------------------------------------\n");
@@ -37,6 +39,7 @@ int main()
             scanf("%d", &number);
 
             t = makeReservation(t, b, number, name);
+            writeFile(t->passengerName, t->origin, t->destination, t->busNum);
 
             printf("\nReserva realizada com sucesso!\n");
 

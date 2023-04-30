@@ -16,7 +16,7 @@ Tickets *start() // função para criar uma nova instância da estrutura ticket 
     return NULL;
 }
 
-Tickets *makeReservation(Tickets *l, Bus *b, int number, char *name) // função para criar um novo bilhete e adicioná-lo à lista encadeada de bilhetes
+Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função para criar um novo bilhete e adicioná-lo à Tickets encadeada de bilhetes
 {
     Tickets *ticket = (Tickets *)malloc(sizeof(Tickets));
     Bus *bus = (Bus *)malloc(sizeof(Bus));
@@ -37,11 +37,11 @@ Tickets *makeReservation(Tickets *l, Bus *b, int number, char *name) // função
 
             bus->vacancies--; // diminui a quantidade de vagas
 
-            ticket->next = l;
+            ticket->next = t;
+
             return ticket;
         }
     }
-
     return NULL;
 }
 
@@ -50,6 +50,14 @@ Tickets *deleteReservation(Tickets *t, Bus *b, char *name)
     Tickets *prev = NULL;
     Tickets *ticket = t;
     Bus *bus = b;
+
+    FILE *f = fopen("../service/data.txt", "w");
+    if (f == NULL)
+    {
+        printf("\nFalha ao abrir o programa!\n");
+        exit(1);
+    }
+    fclose(f);
 
     while (ticket != NULL && (strcmp(ticket->passengerName, name)) != 0)
     {
@@ -157,6 +165,7 @@ Tickets *editReservation(Bus *b, Tickets *t, char *name, int num)
                     strcpy(ticket->origin, bus->origin);
                     strcpy(ticket->destination, bus->destination);
                     ticket->busNum = bus->number;
+                    editFile(ticket->passengerName, ticket->origin, ticket->destination, ticket->busNum);
                     return ticket;
                 }
             }
@@ -164,6 +173,74 @@ Tickets *editReservation(Bus *b, Tickets *t, char *name, int num)
         }
     }
     return t;
+}
+
+void writeFile(char *name, char *origin, char *destination, int num)
+{
+    FILE *f = fopen("../service/data.txt", "a");
+    if (f == NULL)
+    {
+        printf("\nFalha ao abrir o programa!\n");
+        exit(1);
+    }
+    fprintf(f, "Nome: %s\nOrigem: %s\nDestino: %s\nNumero do onibus: %d\n\n", name, origin, destination, num);
+    fclose(f);
+}
+
+void editFile(char *name, char *origin, char *destination, int num)
+{
+    FILE *f = fopen("../service/data.txt", "r+");
+    int position = 0;
+    if (f == NULL)
+    {
+        printf("\nFalha ao abrir o programa!\n");
+        exit(1);
+    }
+    while (!feof(f))
+    {
+        if (fseek(f, position, SEEK_SET) == 0)
+        {
+            fprintf(f, "Nome: %s\nOrigem: %s\nDestino: %s\nNumero do onibus: %d\n\n", name, origin, destination, num);
+            break;
+        }
+        position += 5;
+    }
+    fclose(f);
+}
+
+Tickets *readFile()
+{
+    FILE *f = fopen("../service/data.txt", "r");
+    Tickets *head = NULL;
+    Tickets *temp = NULL;
+    if (f == NULL)
+    {
+        printf("\nErro ao abrir o arquivo!\n");
+        exit(1);
+    }
+    while (!feof(f))
+    {
+        Tickets *new_ticket = (Tickets *)malloc(sizeof(Tickets));
+        if (new_ticket == NULL)
+        {
+            printf("Erro na alocacao!\n");
+            exit(1);
+        }
+        fscanf(f, "Nome: %s\nOrigem: %s\nDestino: %s\nNumero do onibus: %d\n\n", new_ticket->passengerName, new_ticket->origin, new_ticket->destination, &new_ticket->busNum);
+        new_ticket->next = NULL;
+        if (head == NULL)
+        {
+            head = new_ticket;
+            temp = new_ticket;
+        }
+        else
+        {
+            temp->next = new_ticket;
+            temp = new_ticket;
+        }
+    }
+    fclose(f);
+    return head;
 }
 
 void freeTickets(Tickets *t)
