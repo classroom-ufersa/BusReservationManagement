@@ -2,13 +2,14 @@
 </h1>
 
 ## Problemática:
-    projete um sistema para reserva de passagens 
-    de ônibus. Seu sistema precisará manipular ônibus e passageiros.
+    projete um sistema para reserva de passagens de ônibus. Seu sistema precisará manipular ônibus e passageiros.
+
         Os ônibus devem ter os atributos básicos:
     - número/código;
     - vagas;
     - origem;
     - destino.
+
         As passagens devem ter: 
     - nome; 
     - origem;
@@ -24,4 +25,11 @@
 
 ## Funcionalidades do sistema
 
-### Cadastro de passageiros 
+#### Realizar reserva
+#### Excluir reserva
+#### Listar reserva
+#### Buscar reserva
+#### Editar reserva
+#### Consultar vagas disponiveis para uma dada origem - destino
+#### Consultar quantitativos de passageiros
+#### Sair
