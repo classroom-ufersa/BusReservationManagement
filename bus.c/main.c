@@ -11,14 +11,14 @@ int main()
     int option, number, vacancies = 10;
     char name[50];
 
-    t = readFile();
-
     printf("--------------------------------------------\n");
     printf("Boas vindas ao sistema de reserva de onibus!\n");
     printf("--------------------------------------------\n");
 
     b = registerBus(b, 1, vacancies, "Alexandria", "Natal");
     b = registerBus(b, 2, vacancies, "Parana", "Uirauna");
+
+    t = readFile(b);
 
     do
     {
@@ -39,17 +39,20 @@ int main()
             scanf("%d", &number);
 
             t = makeReservation(t, b, number, name);
-            writeFile(t->passengerName, t->origin, t->destination, t->busNum);
+
+            writeFile(t);
 
             printf("\nReserva realizada com sucesso!\n");
 
             break;
         case 2:
             printf("\nExcluindo reserva...\n");
-            printf("Informe seu nome: ");
+            printf("\nInforme seu nome: ");
             scanf(" %[^\n]s", name);
 
             t = deleteReservation(t, b, name);
+
+            writeFile(t);
 
             break;
         case 3:
@@ -58,6 +61,7 @@ int main()
             scanf("%d", &number);
 
             showReservation(t, number);
+
             break;
         case 4:
             printf("Buscando reserva...\n\n");
@@ -66,32 +70,32 @@ int main()
 
             printf("Informacoes de sua reserva:\n");
             searchReservation(t, name);
+
             break;
         case 5:
             printf("\nEditando reserva...\n");
-            printf("Informe seu nome: ");
+            printf("\nInforme seu nome: ");
             scanf(" %[^\n]s", name);
 
+            printf("\nLista de onibus disponiveis:\n");
             showBus(b);
 
+            printf("\nInforme outro numero de onibus para alterar sua reserva: ");
+            scanf("%d", &number);
+
+            // passando apenas a reserva referente ao nome do usuario
             Tickets *ticket = NULL;
-            int found = 0;
             for (ticket = t; ticket != NULL; ticket = ticket->next)
             {
-                if (strcmp(name, ticket->passengerName) == 0)
+                if (strcmp(ticket->passengerName, name) == 0)
                 {
-                    printf("\nInforme o numero do onibus para alterar sua reserva: ");
-                    scanf("%d", &number);
-                    t = editReservation(b, ticket, name, number);
-                    printf("\nReserva editada com sucesso!\n");
-                    found = 1;
+                    editReservation(ticket, b, number);
                     break;
                 }
             }
-            if (!found)
-            {
-                printf("\nNome nao cadastrado!\n");
-            }
+
+            writeFile(t);
+
             break;
         case 6:
             printf("Consultando vagas disponiveis...\n\n");
@@ -109,6 +113,7 @@ int main()
             break;
         case 8:
             printf("Saindo...\n");
+
             freeBus(b);
             freeTickets(t);
             break;

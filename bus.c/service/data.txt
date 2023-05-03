@@ -1,10 +1,10 @@
-Nome: Heitor
-Origem: Parana
-Destino: Uirauna
-Numero do onibus: 2
-
-Nome: Caio
+Nome: caio
 Origem: Alexandria
 Destino: Natal
 Numero do onibus: 1
+
+Nome: heitor
+Origem: Parana
+Destino: Uirauna
+Numero do onibus: 2
 
