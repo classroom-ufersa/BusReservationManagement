@@ -170,30 +170,26 @@ void searchReservation(Tickets *t, char *name)
     }
 }
 
-Tickets *editReservation(Bus *b, Tickets *t, char *name, int num)
+void editReservation(Tickets *t, Bus *b, int number)
 {
-    Tickets *ticket = NULL;
-    for (ticket = t; ticket != NULL; ticket = ticket->next)
+    Bus *bus = NULL;
+    for (bus = b; bus != NULL; bus = bus->next)
     {
-        if (strcmp(name, ticket->passengerName) == 0)
+        // aumenta a vaga do onibus do qual a reserva sera desfeita
+        if (bus->number == t->busNum)
         {
-            Bus *bus = NULL;
-            for (bus = b; bus != NULL; bus = bus->next)
-            {
-                if (num == bus->number)
-                {
-                    strcpy(ticket->origin, bus->origin);
-                    strcpy(ticket->destination, bus->destination);
-                    ticket->busNum = bus->number;
+            bus->vacancies++;
+        }
+        // verificando o elemento o qual contem o mesmo numero/codigo do onibus
+        if (number == bus->number)
+        {
+            strcpy(t->origin, bus->origin);
+            strcpy(t->destination, bus->destination);
+            t->busNum = bus->number;
 
-                    editFile(ticket->passengerName, ticket->origin, ticket->destination, ticket->busNum);
-                    return ticket;
-                }
-            }
-            break;
+            bus->vacancies--;
         }
     }
-    return t;
 }
 
 void writeFile(Tickets *t)
@@ -205,40 +201,18 @@ void writeFile(Tickets *t)
         exit(1);
     }
 
-    Tickets *current = t;
-    while (current != NULL)
+    while (t != NULL)
     {
         // grava os dados do bilhete no arquivo
-        fprintf(f, "Nome: %s\n", current->passengerName);
-        fprintf(f, "Origem: %s\n", current->origin);
-        fprintf(f, "Destino: %s\n", current->destination);
-        fprintf(f, "Numero do onibus: %d\n\n", current->busNum);
+        fprintf(f, "Nome: %s\n", t->passengerName);
+        fprintf(f, "Origem: %s\n", t->origin);
+        fprintf(f, "Destino: %s\n", t->destination);
+        fprintf(f, "Numero do onibus: %d\n\n", t->busNum);
 
-        current = current->next;
+        t = t->next;
     }
 
     fclose(f); // fecha o arquivo
-}
-
-void editFile(char *name, char *origin, char *destination, int num)
-{
-    FILE *f = fopen("../service/data.txt", "r+");
-    int position = 0;
-    if (f == NULL)
-    {
-        printf("\nFalha ao abrir o programa!\n");
-        exit(1);
-    }
-    while (!feof(f))
-    {
-        if (fseek(f, position, SEEK_SET) == 0)
-        {
-            fprintf(f, "Nome: %s\nOrigem: %s\nDestino: %s\nNumero do onibus: %d", name, origin, destination, num);
-            break;
-        }
-        position += 5;
-    }
-    fclose(f);
 }
 
 Tickets *readFile(Bus *b)
@@ -251,6 +225,14 @@ Tickets *readFile(Bus *b)
     {
         printf("\nErro ao abrir o arquivo!\n");
         exit(1);
+    }
+
+    fseek(f, 0, SEEK_END);
+    long size = ftell(f);
+    if (size == 0) // arquivo vazio
+    {
+        fclose(f);
+        return NULL;
     }
 
     while (!feof(f))
@@ -287,8 +269,7 @@ Tickets *readFile(Bus *b)
         }
         aux = aux->next;
     }
-    
-    
+
     fclose(f);
     return head;
 }
