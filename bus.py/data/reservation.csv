@@ -1,16 +1,9 @@
-Nome do passageiro: Caio Moises
-Numero do bilhete: 47718
-Numero do onibus: 1
-Destino: Alexandria-RN-->Natal-RN
-
-Nome do passageiro: Abner Torres
-Numero do bilhete: 75194
-Numero do onibus: 3
-Destino: Pau dos Ferros-RN-->Fortaleza-CE
-
-Nome do passageiro: Lucas Emanuel
-Numero do bilhete: 77135
-Numero do onibus: 1
-Destino: Alexandria-RN-->Natal-RN
-
-
+"|Nome do passageiro|","Numero do bilhete|","Numero do onibus|","Destino|"
+Caio Moises|,98823|,1|,Alexandria-RN-->Natal-RN|
+Heitor |,76809|,1|,Alexandria-RN-->Natal-RN|
+A|,83729|,1|,Alexandria-RN-->Natal-RN|
+B|,55241|,1|,Alexandria-RN-->Natal-RN|
+Cauo|,46115|,1|,Alexandria-RN-->Natal-RN|
+Caio|,75470|,1|,Alexandria-RN-->Natal-RN|
+Jose|,54313|,1|,Alexandria-RN-->Natal-RN|
+J|,95657|,1|,Alexandria-RN-->Natal-RN|
