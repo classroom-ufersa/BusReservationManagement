@@ -11,14 +11,14 @@ int main()
     int option, number, vacancies = 10;
     char name[50];
 
-    t = readFile();
-
     printf("--------------------------------------------\n");
     printf("Boas vindas ao sistema de reserva de onibus!\n");
     printf("--------------------------------------------\n");
 
     b = registerBus(b, 1, vacancies, "Alexandria", "Natal");
     b = registerBus(b, 2, vacancies, "Parana", "Uirauna");
+
+    t = readFile(b);
 
     do
     {
@@ -39,17 +39,20 @@ int main()
             scanf("%d", &number);
 
             t = makeReservation(t, b, number, name);
-            writeFile(t->passengerName, t->origin, t->destination, t->busNum);
+
+            writeFile(t);
 
             printf("\nReserva realizada com sucesso!\n");
 
             break;
         case 2:
             printf("\nExcluindo reserva...\n");
-            printf("Informe seu nome: ");
+            printf("\nInforme seu nome: ");
             scanf(" %[^\n]s", name);
 
             t = deleteReservation(t, b, name);
+
+            writeFile(t);
 
             break;
         case 3:
@@ -69,7 +72,7 @@ int main()
             break;
         case 5:
             printf("\nEditando reserva...\n");
-            printf("Informe seu nome: ");
+            printf("\nInforme seu nome: ");
             scanf(" %[^\n]s", name);
 
             showBus(b);
@@ -109,6 +112,7 @@ int main()
             break;
         case 8:
             printf("Saindo...\n");
+
             freeBus(b);
             freeTickets(t);
             break;

@@ -19,6 +19,9 @@ Tickets *start() // função para criar uma nova instância da estrutura ticket 
 Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função para criar um novo bilhete e adicioná-lo à Tickets encadeada de bilhetes
 {
     Tickets *ticket = (Tickets *)malloc(sizeof(Tickets));
+    Tickets *previous = NULL;
+    Tickets *current = t;
+
     Bus *bus = (Bus *)malloc(sizeof(Bus));
     if (ticket == NULL || bus == NULL)
     {
@@ -33,55 +36,60 @@ Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função
             strcpy(ticket->origin, bus->origin);
             strcpy(ticket->destination, bus->destination);
             strcpy(ticket->passengerName, name);
+
             ticket->busNum = bus->number;
-
             bus->vacancies--; // diminui a quantidade de vagas
-
             ticket->next = t;
 
-            return ticket;
+            break;
         }
     }
-    return NULL;
+
+    while (current != NULL && (strcmp(current->passengerName, name)) < 0)
+    {
+        previous = current;
+        current = current->next;
+    }
+
+    if (previous == NULL)
+    {
+        t = ticket; // o novo bilhete deve ser o primerio da lista
+    }
+    else
+    {
+        previous->next = ticket; // insere o novo bilhete apos o bilhete anterior
+    }
+    ticket->next = current;
+
+    return t;
 }
 
 Tickets *deleteReservation(Tickets *t, Bus *b, char *name)
 {
     Tickets *prev = NULL;
     Tickets *ticket = t;
+    if (ticket == NULL)
+    {
+        printf("\nLista vazia!\n");
+        return t;
+    }
+
     Bus *bus = b;
 
-    FILE *f = fopen("../service/data.txt", "w");
-    if (f == NULL)
-    {
-        printf("\nFalha ao abrir o programa!\n");
-        exit(1);
-    }
-    fclose(f);
-
-    while (ticket != NULL && (strcmp(ticket->passengerName, name)) != 0)
+    while (ticket != NULL && strcmp(ticket->passengerName, name) != 0)
     {
         prev = ticket;
         ticket = ticket->next;
     }
 
-    while (bus->number != ticket->busNum)
-    {
-        b = bus->next; // procura o onibus vinculado a reserva
-    }
-
-    if (bus->number == ticket->busNum)
-    {
-        bus->vacancies++; // aumente a quantidade de vagas disponiveis
-    }
-
     if (ticket == NULL)
     {
         printf("\nNome nao cadastrado!\n");
-        return t; // não achou a reserva e retorna a lista original
+        return t;
     }
 
-    if (prev == NULL)
+    // verifica se o nó a ser excluído é o primeiro nó da lista
+    if (ticket == t)
     {
         t = ticket->next;
     }
@@ -90,7 +98,19 @@ Tickets *deleteReservation(Tickets *t, Bus *b, char *name)
         prev->next = ticket->next;
     }
 
+    while (bus != NULL && bus->number != ticket->busNum)
+    {
+        bus = bus->next;
+    }
+
+    if (bus != NULL)
+    {
+        bus->vacancies++;
+    }
+
     free(ticket);
+
+    // t = prev;
 
     printf("\nReserva excluida com sucesso!\n");
     return t;
@@ -165,6 +185,7 @@ Tickets *editReservation(Bus *b, Tickets *t, char *name, int num)
                     strcpy(ticket->origin, bus->origin);
                     strcpy(ticket->destination, bus->destination);
                     ticket->busNum = bus->number;
+
                     editFile(ticket->passengerName, ticket->origin, ticket->destination, ticket->busNum);
                     return ticket;
                 }
@@ -175,16 +196,28 @@ Tickets *editReservation(Bus *b, Tickets *t, char *name, int num)
     return t;
 }
 
-void writeFile(char *name, char *origin, char *destination, int num)
+void writeFile(Tickets *t)
 {
-    FILE *f = fopen("../service/data.txt", "a");
+    FILE *f = fopen("../service/data.txt", "w");
     if (f == NULL)
     {
-        printf("\nFalha ao abrir o programa!\n");
+        printf("Erro na abertura do arquivo!\n");
         exit(1);
     }
-    fprintf(f, "Nome: %s\nOrigem: %s\nDestino: %s\nNumero do onibus: %d\n\n", name, origin, destination, num);
-    fclose(f);
+
+    Tickets *current = t;
+    while (current != NULL)
+    {
+        // grava os dados do bilhete no arquivo
+        fprintf(f, "Nome: %s\n", current->passengerName);
+        fprintf(f, "Origem: %s\n", current->origin);
+        fprintf(f, "Destino: %s\n", current->destination);
+        fprintf(f, "Numero do onibus: %d\n\n", current->busNum);
+
+        current = current->next;
+    }
+
+    fclose(f); // fecha o arquivo
 }
 
 void editFile(char *name, char *origin, char *destination, int num)
@@ -200,7 +233,7 @@ void editFile(char *name, char *origin, char *destination, int num)
     {
         if (fseek(f, position, SEEK_SET) == 0)
         {
-            fprintf(f, "Nome: %s\nOrigem: %s\nDestino: %s\nNumero do onibus: %d\n\n", name, origin, destination, num);
+            fprintf(f, "Nome: %s\nOrigem: %s\nDestino: %s\nNumero do onibus: %d", name, origin, destination, num);
             break;
         }
         position += 5;
@@ -208,37 +241,54 @@ void editFile(char *name, char *origin, char *destination, int num)
     fclose(f);
 }
 
-Tickets *readFile()
+Tickets *readFile(Bus *b)
 {
     FILE *f = fopen("../service/data.txt", "r");
     Tickets *head = NULL;
     Tickets *temp = NULL;
+    Tickets *aux = NULL;
     if (f == NULL)
     {
         printf("\nErro ao abrir o arquivo!\n");
         exit(1);
     }
+
     while (!feof(f))
     {
-        Tickets *new_ticket = (Tickets *)malloc(sizeof(Tickets));
-        if (new_ticket == NULL)
+        Tickets *ticket = (Tickets *)malloc(sizeof(Tickets));
+        if (ticket == NULL)
         {
             printf("Erro na alocacao!\n");
             exit(1);
         }
-        fscanf(f, "Nome: %s\nOrigem: %s\nDestino: %s\nNumero do onibus: %d\n\n", new_ticket->passengerName, new_ticket->origin, new_ticket->destination, &new_ticket->busNum);
-        new_ticket->next = NULL;
+        fscanf(f, "Nome: %s\nOrigem: %s\nDestino: %s\nNumero do onibus: %d\n\n", ticket->passengerName, ticket->origin, ticket->destination, &ticket->busNum);
+        ticket->next = NULL;
         if (head == NULL)
         {
-            head = new_ticket;
-            temp = new_ticket;
+            head = ticket;
+            temp = ticket;
         }
         else
         {
-            temp->next = new_ticket;
-            temp = new_ticket;
+            temp->next = ticket;
+            temp = ticket;
         }
     }
+
+    aux = head; // mexe em uma copia da struct tickets head
+    while (aux != NULL)
+    {
+        for (Bus *bus = b; bus != NULL; bus = bus->next) // acha o numero da reserva associadp ao numero do onibus
+        {
+            if (aux->busNum == bus->number)
+            {
+                bus->vacancies--; // declementa a quantidade de vagas
+            }
+        }
+        aux = aux->next;
+    }
+    
+    
     fclose(f);
     return head;
 }
