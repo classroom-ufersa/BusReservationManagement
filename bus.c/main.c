@@ -24,7 +24,17 @@ int main()
     {
         printf("\nMenu:\n1. Realizar reserva\n2. Excluir reserva\n3. Listar reserva\n4. Buscar reserva\n5. Editar reserva\n6. Consultar vagas disponiveis para uma dada origem - destino\n7. Consultar quantitativos de passageiros\n8. Sair\n\n");
         printf("Digite uma opcao: ");
-        scanf("%d", &option);
+        if (scanf("%d", &option) != 1)
+        {
+            // Limpando o buffer do teclado
+            int c;
+            while ((c = getchar() != '\n') && c != EOF)
+            {
+                // Descartando caracteres
+            }
+            printf("\nOpcao invalida!\n");
+            continue;
+        }
         system("cls");
         switch (option)
         {
@@ -117,7 +127,7 @@ int main()
             freeTickets(t);
             break;
         default:
-            printf("\nOpcao invalida!\n\n");
+            printf("\nOpcao invalida!\n");
             break;
         }
     } while (option != 8);
