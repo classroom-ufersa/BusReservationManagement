@@ -67,6 +67,7 @@ void showPassengerQuantity(Bus *b, int vacancies, int num)
         if (num == bus->number)
         {
             printf("Quantidade de passageiros presentes no onibus %d: %d\n", bus->number, vacancies - bus->vacancies);
+            found = 1;
         }
     }
     if (!found)
