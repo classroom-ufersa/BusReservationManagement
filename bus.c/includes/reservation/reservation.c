@@ -173,22 +173,36 @@ void searchReservation(Tickets *t, char *name)
 void editReservation(Tickets *t, Bus *b, int number)
 {
     Bus *bus = NULL;
+    int found = 0;
+    Tickets *aux = NULL;
+    aux = t;
     for (bus = b; bus != NULL; bus = bus->next)
     {
         // aumenta a vaga do onibus do qual a reserva sera desfeita
-        if (bus->number == t->busNum)
+        if (bus->number == aux->busNum)
         {
             bus->vacancies++;
         }
         // verificando o elemento o qual contem o mesmo numero/codigo do onibus
-        if (number == bus->number)
+        if (bus->number == number)
         {
             strcpy(t->origin, bus->origin);
             strcpy(t->destination, bus->destination);
             t->busNum = bus->number;
 
             bus->vacancies--;
+
+            found = 1;
         }
+    }
+
+    if (!found)
+    {
+        printf("\nNumero de onibus nao encontrado!\n");
+    }
+    else
+    {
+        printf("\nEdicao realizada com sucesso!\n");
     }
 }
 
