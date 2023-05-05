@@ -108,7 +108,7 @@ int main()
             printf("Informe o numero do onibus: ");
             scanf("%d", &number);
 
-            showPassengerQuantity(b, number);
+            showPassengerQuantity(b, vacancies, number);
             break;
         case 8:
             printf("Saindo...\n");
