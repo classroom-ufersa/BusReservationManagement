@@ -234,6 +234,7 @@ Tickets *readFile(Tickets *t, Bus *b)
         fclose(f);
         return t;
     }
+    fseek(f, 0, SEEK_SET); // retorna o ponteiro do arquivo ao início
 
     while (!feof(f))
     {

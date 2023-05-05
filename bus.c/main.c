@@ -68,7 +68,6 @@ int main()
             printf("Informe seu nome: ");
             scanf(" %[^\n]s", name);
 
-            printf("Informacoes de sua reserva:\n");
             searchReservation(t, name);
 
             break;
