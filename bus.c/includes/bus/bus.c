@@ -58,7 +58,7 @@ void showAvaliableVacancies(Bus *b, int num)
     }
 }
 
-void showPassengerQuantity(Bus *b, int num)
+void showPassengerQuantity(Bus *b, int vacancies, int num)
 {
     int found = 0;
     Bus *bus = (Bus *)malloc(sizeof(Bus));
@@ -66,7 +66,7 @@ void showPassengerQuantity(Bus *b, int num)
     {
         if (num == bus->number)
         {
-            printf("Quantidade de passageiros presentes no onibus %d: %d\n", bus->number, 20 - bus->vacancies);
+            printf("Quantidade de passageiros presentes no onibus %d: %d\n", bus->number, vacancies - bus->vacancies);
         }
     }
     if (!found)
