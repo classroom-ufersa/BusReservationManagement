@@ -18,7 +18,7 @@ int main()
     b = registerBus(b, 1, vacancies, "Alexandria", "Natal");
     b = registerBus(b, 2, vacancies, "Parana", "Uirauna");
 
-    t = readFile(b);
+    t = readFile(t, b);
 
     do
     {

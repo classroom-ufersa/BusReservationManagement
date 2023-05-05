@@ -215,7 +215,7 @@ void writeFile(Tickets *t)
     fclose(f); // fecha o arquivo
 }
 
-Tickets *readFile(Bus *b)
+Tickets *readFile(Tickets *t, Bus *b)
 {
     FILE *f = fopen("../service/data.txt", "r");
     Tickets *head = NULL;
@@ -232,7 +232,7 @@ Tickets *readFile(Bus *b)
     if (size == 0) // arquivo vazio
     {
         fclose(f);
-        return NULL;
+        return t;
     }
 
     while (!feof(f))

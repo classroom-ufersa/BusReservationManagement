@@ -8,5 +8,5 @@ void showReservation(Tickets *t, int number);
 void searchReservation(Tickets *t, char *name);
 void editReservation(Tickets *t, Bus *b, int number);
 void writeFile(Tickets *t);
-Tickets *readFile(Bus *b);
+Tickets *readFile(Tickets *t, Bus *b);
 void freeTickets(Tickets *t);
