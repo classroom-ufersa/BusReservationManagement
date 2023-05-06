@@ -1,0 +1,15 @@
+Nome: Abner
+Origem: Alexandria
+Destino: Natal
+Numero do onibus: 1
+
+Nome: Bruno
+Origem: Alexandria
+Destino: Natal
+Numero do onibus: 1
+
+Nome: Heitor
+Origem: Parana
+Destino: Uirauna
+Numero do onibus: 2
+
