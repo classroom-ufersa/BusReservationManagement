@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "includes/reservation/reservation.c"
 
@@ -10,6 +11,8 @@ int main()
     Bus *b = startBus();  // iniciando a lista de onibus
     int option, number, vacancies = 10;
     char name[50];
+    char firstChar;
+    char firstCharUpper;
 
     printf("--------------------------------------------\n");
     printf("Boas vindas ao sistema de reserva de onibus!\n");
@@ -43,6 +46,11 @@ int main()
             printf("Informe seu nome: ");
             scanf(" %[^\n]s", name);
 
+            // converte o primeiro caractere do nome para maiúsculo
+            firstChar = name[0]; //Obtém o primeiro caractere do nome do passageiro
+            firstCharUpper = toupper(firstChar); //Converte o primeiro caractere para maiúsculo
+            name[0] = firstCharUpper; //Atualiza o primeiro caractere do nome com a versão maiúscula
+
             showBus(b); // mostra os onibus disponiveis para reserva
 
             printf("\nInforme o numero do onibus: ");
@@ -59,6 +67,11 @@ int main()
             printf("\nExcluindo reserva...\n");
             printf("\nInforme seu nome: ");
             scanf(" %[^\n]s", name);
+
+            // converte o primeiro caractere do nome para maiúsculo
+            firstChar = name[0];
+            firstCharUpper = toupper(firstChar);
+            name[0] = firstCharUpper;
 
             t = deleteReservation(t, b, name);
 
@@ -78,6 +91,11 @@ int main()
             printf("Informe seu nome: ");
             scanf(" %[^\n]s", name);
 
+            // converte o primeiro caractere do nome para maiúsculo
+            firstChar = name[0];
+            firstCharUpper = toupper(firstChar);
+            name[0] = firstCharUpper;
+
             searchReservation(t, name);
 
             break;
@@ -85,6 +103,11 @@ int main()
             printf("\nEditando reserva...\n");
             printf("\nInforme seu nome: ");
             scanf(" %[^\n]s", name);
+
+            // converte o primeiro caractere do nome para maiúsculo
+            firstChar = name[0];
+            firstCharUpper = toupper(firstChar);
+            name[0] = firstCharUpper;
 
             int found = 0;
             Tickets *ticket = NULL;
