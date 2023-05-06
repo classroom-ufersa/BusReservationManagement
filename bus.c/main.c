@@ -24,7 +24,17 @@ int main()
     {
         printf("\nMenu:\n1. Realizar reserva\n2. Excluir reserva\n3. Listar reserva\n4. Buscar reserva\n5. Editar reserva\n6. Consultar vagas disponiveis para uma dada origem - destino\n7. Consultar quantitativos de passageiros\n8. Sair\n\n");
         printf("Digite uma opcao: ");
-        scanf("%d", &option);
+        if (scanf("%d", &option) != 1)
+        {
+            // Limpando o buffer do teclado
+            int c;
+            while ((c = getchar() != '\n') && c != EOF)
+            {
+                // Descartando caracteres
+            }
+            printf("\nOpcao invalida!\n");
+            continue;
+        }
         system("cls");
         switch (option)
         {
@@ -76,21 +86,26 @@ int main()
             printf("\nInforme seu nome: ");
             scanf(" %[^\n]s", name);
 
-            printf("\nLista de onibus disponiveis:\n");
-            showBus(b);
-
-            printf("\nInforme outro numero de onibus para alterar sua reserva: ");
-            scanf("%d", &number);
-
-            // passando apenas a reserva referente ao nome do usuario
+            int found = 0;
             Tickets *ticket = NULL;
+            // passando apenas a reserva referente ao nome do usuario e mostrando os onibus disponiveis
             for (ticket = t; ticket != NULL; ticket = ticket->next)
             {
                 if (strcmp(ticket->passengerName, name) == 0)
                 {
+                    printf("\nLista de onibus disponiveis:\n");
+                    showBus(b);
+                    printf("\n\nInforme outro numero de onibus para alterar sua reserva: ");
+                    scanf("%d", &number);
                     editReservation(ticket, b, number);
+                    found = 1;
                     break;
                 }
+            }
+
+            if (!found)
+            {
+                printf("\nNome nao encontrado!\n");
             }
 
             writeFile(t);
@@ -117,7 +132,7 @@ int main()
             freeTickets(t);
             break;
         default:
-            printf("\nOpcao invalida!\n\n");
+            printf("\nOpcao invalida!\n");
             break;
         }
     } while (option != 8);
