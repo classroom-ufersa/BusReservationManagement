@@ -16,20 +16,21 @@ Tickets *start() // função para criar uma nova instância da estrutura ticket 
     return NULL;
 }
 
-void convertName(char *name)
+void formatText(char *name)
 {
     int i = 0;
-    char firstChar, firstCharUpper;
-    // convertendo todo o nome para minúsculo
-    while (name[i])
-    {
-        name[i] = tolower(name[i]);
+    int capitalizeNext = 1;
+    
+    while (name[i]) {
+        if (capitalizeNext && islower(name[i])) {
+            name[i] = toupper(name[i]);
+        } else if (!capitalizeNext && isupper(name[i])) {
+            name[i] = tolower(name[i]);
+        }
+        
+        capitalizeNext = (name[i] == ' ');
         i++;
     }
-    // converte o primeiro caractere do nome para maiúsculo
-    firstChar = name[0];
-    firstCharUpper = toupper(firstChar);
-    name[0] = firstCharUpper;
 }
 
 Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função para criar um novo bilhete e adicioná-lo à Tickets encadeada de bilhetes
@@ -178,7 +179,7 @@ void searchReservation(Tickets *t, char *name)
     {
         if (!alreadyPrinted)
         {
-            printf("\nInformacoes de sua reserva:\n");
+            printf("\nInformacoes de sua reserva:\n\n");
             alreadyPrinted = 1;
         }
         if (strcmp(ticket->passengerName, name) == 0)
