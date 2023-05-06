@@ -9,7 +9,7 @@ int main()
 {
     Tickets *t = start(); // iniciando a lista de reservas
     Bus *b = startBus();  // iniciando a lista de onibus
-    int option, number, vacancies = 10;
+    int option, number, vacancies = 3;
     char name[50], firstChar, firstCharUpper;
 
     printf("--------------------------------------------\n");
@@ -57,9 +57,7 @@ int main()
             t = makeReservation(t, b, number, name);
 
             writeFile(t);
-
-            printf("\nReserva realizada com sucesso!\n");
-
+            
             break;
         case 2:
             printf("\nExcluindo reserva...\n");

@@ -33,8 +33,9 @@ Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função
     {
         if (number == bus->number) // verifica se o numero do onibus é existe e atribui os valores à passagem
         {
-            if(bus->vacancies == 0){
-                printf("As vagas deste onibus esgotou!");
+            if (bus->vacancies == 0)
+            {
+                printf("\nAs vagas deste onibus esgotou!\n");
                 return t;
             }
             strcpy(ticket->origin, bus->origin);
@@ -64,6 +65,8 @@ Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função
         previous->next = ticket; // insere o novo bilhete apos o bilhete anterior
     }
     ticket->next = current;
+
+    printf("\nReserva realizada com sucesso!\n");
 
     return t;
 }
@@ -190,14 +193,19 @@ void editReservation(Tickets *t, Bus *b, int number)
         // verificando o elemento o qual contem o mesmo numero/codigo do onibus
         if (bus->number == number)
         {
+            // Verificando se há vagas no onibus
+            if (bus->vacancies == 0)
+            {
+                printf("\nAs vagas deste onibus esgotou!\n");
+                break;
+            }
             strcpy(t->origin, bus->origin);
             strcpy(t->destination, bus->destination);
             t->busNum = bus->number;
 
             bus->vacancies--;
-
-            found = 1;
         }
+        found = 1;
     }
 
     if (!found)
