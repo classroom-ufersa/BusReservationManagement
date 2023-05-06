@@ -10,7 +10,7 @@ int main()
     Tickets *t = start(); // iniciando a lista de reservas
     Bus *b = startBus();  // iniciando a lista de onibus
     int option, number, vacancies = 3;
-    char name[50], firstChar, firstCharUpper;
+    char name[50];
 
     printf("--------------------------------------------\n");
     printf("Boas vindas ao sistema de reserva de onibus!\n");
@@ -44,10 +44,7 @@ int main()
             printf("Informe seu nome: ");
             scanf(" %[^\n]s", name);
 
-            // converte o primeiro caractere do nome para maiúsculo
-            firstChar = name[0];
-            firstCharUpper = toupper(firstChar);
-            name[0] = firstCharUpper;
+            convertName(name); // trantando o nome
 
             showBus(b); // mostra os onibus disponiveis para reserva
 
@@ -64,9 +61,7 @@ int main()
             printf("\nInforme seu nome: ");
             scanf(" %[^\n]s", name);
 
-            firstChar = name[0];
-            firstCharUpper = toupper(firstChar);
-            name[0] = firstCharUpper;
+            convertName(name); // trantando o nome
 
             t = deleteReservation(t, b, name);
 
@@ -86,9 +81,7 @@ int main()
             printf("Informe seu nome: ");
             scanf(" %[^\n]s", name);
 
-            firstChar = name[0];
-            firstCharUpper = toupper(firstChar);
-            name[0] = firstCharUpper;
+            convertName(name); // trantando o nome
 
             searchReservation(t, name);
 
@@ -98,9 +91,7 @@ int main()
             printf("\nInforme seu nome: ");
             scanf(" %[^\n]s", name);
 
-            firstChar = name[0];
-            firstCharUpper = toupper(firstChar);
-            name[0] = firstCharUpper;
+            convertName(name);// trantando o nome
 
             int found = 0;
             Tickets *ticket = NULL;

@@ -16,6 +16,22 @@ Tickets *start() // função para criar uma nova instância da estrutura ticket 
     return NULL;
 }
 
+void convertName(char *name)
+{
+    int i = 0;
+    char firstChar, firstCharUpper;
+    // convertendo todo o nome para minúsculo
+    while (name[i])
+    {
+        name[i] = tolower(name[i]);
+        i++;
+    }
+    // converte o primeiro caractere do nome para maiúsculo
+    firstChar = name[0];
+    firstCharUpper = toupper(firstChar);
+    name[0] = firstCharUpper;
+}
+
 Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função para criar um novo bilhete e adicioná-lo à Tickets encadeada de bilhetes
 {
     Tickets *ticket = (Tickets *)malloc(sizeof(Tickets));
@@ -139,7 +155,7 @@ void showReservation(Tickets *t, int number)
 
         if (number == ticket->busNum)
         {
-            printf("Nome: %s\n", ticket->passengerName);
+            printf("\nNome: %s\n", ticket->passengerName);
             found = 1;
         }
     }
@@ -162,12 +178,12 @@ void searchReservation(Tickets *t, char *name)
     {
         if (!alreadyPrinted)
         {
-            printf("Informacoes de sua reserva:\n");
+            printf("\nInformacoes de sua reserva:\n");
             alreadyPrinted = 1;
         }
         if (strcmp(ticket->passengerName, name) == 0)
         {
-            printf("\nNome: %s\nNumero do onibus: %d\nOrigem: %s\nDestino: %s\n", ticket->passengerName, ticket->busNum, ticket->origin, ticket->destination);
+            printf("Nome: %s\nNumero do onibus: %d\nOrigem: %s\nDestino: %s\n", ticket->passengerName, ticket->busNum, ticket->origin, ticket->destination);
             found = 1;
         }
     }
