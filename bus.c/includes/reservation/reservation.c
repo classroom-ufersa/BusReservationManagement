@@ -16,6 +16,22 @@ Tickets *start() // função para criar uma nova instância da estrutura ticket 
     return NULL;
 }
 
+void convertName(char *name)
+{
+    int i = 0;
+    char firstChar, firstCharUpper;
+    // convertendo todo o nome para minúsculo
+    while (name[i])
+    {
+        name[i] = tolower(name[i]);
+        i++;
+    }
+    // converte o primeiro caractere do nome para maiúsculo
+    firstChar = name[0];
+    firstCharUpper = toupper(firstChar);
+    name[0] = firstCharUpper;
+}
+
 Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função para criar um novo bilhete e adicioná-lo à Tickets encadeada de bilhetes
 {
     Tickets *ticket = (Tickets *)malloc(sizeof(Tickets));
@@ -33,8 +49,9 @@ Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função
     {
         if (number == bus->number) // verifica se o numero do onibus é existe e atribui os valores à passagem
         {
-            if(bus->vacancies == 0){
-                printf("As vagas deste onibus esgotou!");
+            if (bus->vacancies == 0)
+            {
+                printf("\nAs vagas deste onibus esgotou!\n");
                 return t;
             }
             strcpy(ticket->origin, bus->origin);
@@ -64,6 +81,8 @@ Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função
         previous->next = ticket; // insere o novo bilhete apos o bilhete anterior
     }
     ticket->next = current;
+
+    printf("\nReserva realizada com sucesso!\n");
 
     return t;
 }
@@ -136,7 +155,7 @@ void showReservation(Tickets *t, int number)
 
         if (number == ticket->busNum)
         {
-            printf("Nome: %s\n", ticket->passengerName);
+            printf("\nNome: %s\n", ticket->passengerName);
             found = 1;
         }
     }
@@ -159,12 +178,12 @@ void searchReservation(Tickets *t, char *name)
     {
         if (!alreadyPrinted)
         {
-            printf("Informacoes de sua reserva:\n");
+            printf("\nInformacoes de sua reserva:\n");
             alreadyPrinted = 1;
         }
         if (strcmp(ticket->passengerName, name) == 0)
         {
-            printf("\nNome: %s\nNumero do onibus: %d\nOrigem: %s\nDestino: %s\n", ticket->passengerName, ticket->busNum, ticket->origin, ticket->destination);
+            printf("Nome: %s\nNumero do onibus: %d\nOrigem: %s\nDestino: %s\n", ticket->passengerName, ticket->busNum, ticket->origin, ticket->destination);
             found = 1;
         }
     }
@@ -178,8 +197,13 @@ void editReservation(Tickets *t, Bus *b, int number)
 {
     Bus *bus = NULL;
     int found = 0;
-    Tickets *aux = NULL;
-    aux = t;
+    Tickets *aux = (Tickets *)malloc(sizeof(Tickets)); // Aloca memória para uma cópia do bilhete original
+    if (aux == NULL)
+    {
+        exit(1);
+    }
+    
+    memcpy(aux, t, sizeof(Tickets)); // Copia o conteúdo do bilhete original para a cópia
     for (bus = b; bus != NULL; bus = bus->next)
     {
         // aumenta a vaga do onibus do qual a reserva sera desfeita
@@ -190,13 +214,20 @@ void editReservation(Tickets *t, Bus *b, int number)
         // verificando o elemento o qual contem o mesmo numero/codigo do onibus
         if (bus->number == number)
         {
+            // Verificando se há vagas no onibus
+            found = 1;
+            if (bus->vacancies == 0)
+            {
+                printf("\nAs vagas deste onibus esgotou!\n");
+                break;
+            }
             strcpy(t->origin, bus->origin);
             strcpy(t->destination, bus->destination);
             t->busNum = bus->number;
 
             bus->vacancies--;
 
-            found = 1;
+            printf("\nEdicao realizada com sucesso!\n");
         }
     }
 
@@ -204,10 +235,7 @@ void editReservation(Tickets *t, Bus *b, int number)
     {
         printf("\nNumero de onibus nao encontrado!\n");
     }
-    else
-    {
-        printf("\nEdicao realizada com sucesso!\n");
-    }
+    free(aux);
 }
 
 void writeFile(Tickets *t)

@@ -48,7 +48,7 @@ void showAvaliableVacancies(Bus *b, int num)
     {
         if (bus->number == num)
         {
-            printf("Vagas disponiveis para o onibus %d: %d\n", bus->number, bus->vacancies);
+            printf("\nVagas disponiveis para o onibus %d: %d\n", bus->number, bus->vacancies);
             found = 1;
         }
     }
@@ -66,7 +66,7 @@ void showPassengerQuantity(Bus *b, int vacancies, int num)
     {
         if (num == bus->number)
         {
-            printf("Quantidade de passageiros presentes no onibus %d: %d\n", bus->number, vacancies - bus->vacancies);
+            printf("\nQuantidade de passageiros presentes no onibus %d: %d\n", bus->number, vacancies - bus->vacancies);
             found = 1;
         }
     }
