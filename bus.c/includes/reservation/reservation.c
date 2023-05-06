@@ -33,6 +33,10 @@ Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função
     {
         if (number == bus->number) // verifica se o numero do onibus é existe e atribui os valores à passagem
         {
+            if(bus->vacancies == 0){
+                printf("As vagas deste onibus esgotou!");
+                return t;
+            }
             strcpy(ticket->origin, bus->origin);
             strcpy(ticket->destination, bus->destination);
             strcpy(ticket->passengerName, name);
