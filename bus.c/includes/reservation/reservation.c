@@ -16,18 +16,48 @@ Tickets *start() // função para criar uma nova instância da estrutura ticket 
     return NULL;
 }
 
+void hasDuplicateSpace(char *name)
+{
+    int i, j;
+    int space = 0;
+    int nameSize = strlen(name);
+
+    // Eliminando espaços extras
+    for (i = 0, j = 0; i < nameSize; i++)
+    {
+        if (isspace(name[i]))
+        {
+            if (space == 0)
+            {
+                name[j++] = name[i]; // Atribuindo apenas um espaço ao nome
+                space = 1;
+            }
+        }
+        else
+        {
+            name[j++] = name[i]; // Criando uma cópia do nome
+            space = 0;
+        }
+    }
+    name[j] = '\0';
+}
+
 void formatText(char *name)
 {
     int i = 0;
     int capitalizeNext = 1;
-    
-    while (name[i]) {
-        if (capitalizeNext && islower(name[i])) {
+
+    while (name[i])
+    {
+        if (capitalizeNext && islower(name[i]))
+        {
             name[i] = toupper(name[i]);
-        } else if (!capitalizeNext && isupper(name[i])) {
+        }
+        else if (!capitalizeNext && isupper(name[i]))
+        {
             name[i] = tolower(name[i]);
         }
-        
+
         capitalizeNext = (name[i] == ' ');
         i++;
     }
@@ -90,6 +120,7 @@ Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função
 
 Tickets *deleteReservation(Tickets *t, Bus *b, char *name)
 {
+    Bus *bus = b;
     Tickets *prev = NULL;
     Tickets *ticket = t;
     if (ticket == NULL)
@@ -97,8 +128,6 @@ Tickets *deleteReservation(Tickets *t, Bus *b, char *name)
         printf("\nLista vazia!\n");
         return t;
     }
-
-    Bus *bus = b;
 
     while (ticket != NULL && strcmp(ticket->passengerName, name) != 0)
     {
@@ -170,27 +199,30 @@ void searchReservation(Tickets *t, char *name)
 {
     int found = 0;
     int alreadyPrinted = 0;
+
     Tickets *ticket = (Tickets *)malloc(sizeof(Tickets));
     if (ticket == NULL)
     {
         exit(1);
     }
+
     for (ticket = t; ticket != NULL; ticket = ticket->next)
     {
-        if (!alreadyPrinted)
-        {
-            printf("\nInformacoes de sua reserva:\n\n");
-            alreadyPrinted = 1;
-        }
+
         if (strcmp(ticket->passengerName, name) == 0)
         {
+            if (!alreadyPrinted)
+            {
+                printf("\nInformacoes de sua reserva:\n\n");
+                alreadyPrinted = 1;
+            }
             printf("Nome: %s\nNumero do onibus: %d\nOrigem: %s\nDestino: %s\n", ticket->passengerName, ticket->busNum, ticket->origin, ticket->destination);
             found = 1;
         }
     }
     if (!found)
     {
-        printf("Nome nao cadastrado!\n");
+        printf("\nNome nao cadastrado!\n");
     }
 }
 
@@ -203,7 +235,7 @@ void editReservation(Tickets *t, Bus *b, int number)
     {
         exit(1);
     }
-    
+
     memcpy(aux, t, sizeof(Tickets)); // Copia o conteúdo do bilhete original para a cópia
     for (bus = b; bus != NULL; bus = bus->next)
     {

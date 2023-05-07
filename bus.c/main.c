@@ -44,6 +44,7 @@ int main()
             printf("\nInforme seu nome completo: ");
             scanf(" %[^\n]s", name);
 
+            hasDuplicateSpace(name);
             formatText(name); // trantando o nome
 
             showBus(b); // mostra os onibus disponiveis para reserva
@@ -61,6 +62,7 @@ int main()
             printf("\nInforme seu nome completo: ");
             scanf(" %[^\n]s", name);
 
+            hasDuplicateSpace(name);
             formatText(name); // trantando o nome
 
             t = deleteReservation(t, b, name);
@@ -81,6 +83,7 @@ int main()
             printf("\nInforme seu nome completo: ");
             scanf(" %[^\n]s", name);
 
+            hasDuplicateSpace(name);
             formatText(name); // trantando o nome
 
             searchReservation(t, name);
@@ -91,6 +94,7 @@ int main()
             printf("\nInforme seu nome: ");
             scanf(" %[^\n]s", name);
 
+            hasDuplicateSpace(name);
             formatText(name);// trantando o nome
 
             int found = 0;

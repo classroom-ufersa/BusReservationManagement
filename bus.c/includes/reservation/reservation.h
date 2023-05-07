@@ -2,6 +2,7 @@
 typedef struct tickets Tickets;
 
 Tickets *start();
+void hasDuplicateSpace(char *name);
 void formatText(char *name);
 Tickets *makeReservation(Tickets *l, Bus *b, int number, char *name);
 Tickets *deleteReservation(Tickets *t, Bus *b, char *name);
