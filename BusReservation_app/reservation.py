@@ -39,22 +39,55 @@ def listar_reservas():
             st.write(f"Número do ônibus selecionado: {num_bus}")
             st.write(f"Número do ticket: {num_ticket}")
             st.write('---')
+    
 def buscar_reservas(nome):
-    with open('tickets.txt', 'r') as f:
-        linhas = f.readlines() #Lê todas as linhas do arquivo
+    with open('tickets.txt', 'r') as file:
+        lines = file.readlines()
+
     reservas_encontradas = []
-    for i, linha in enumerate(linhas):
-        if nome in linha: #Se o nome estiver na linha, adiciona a linha e as três seguintes à lista de reservas encontradas
-            reservas_encontradas.extend(linhas[i:i+4])
-    if reservas_encontradas:
-        print('Reservas encontradas:')
-        print('---------------------')
-        for reserva in reservas_encontradas:
-            print(reserva.strip()) #Remove o caractere de quebra de linha da string
-        print('---------------------')
+    for i in range(0, len(lines), 4):
+        nome_passageiro = lines[i].strip().split(': ')[1]
+        if nome_passageiro.lower() == nome.lower():
+            num_bus = lines[i+1].strip().split(': ')[1]
+            num_ticket = lines[i+2].strip().split(': ')[1]
+            reservas_encontradas.append((nome_passageiro, num_bus, num_ticket))
+
+    if len(reservas_encontradas) == 0:
+        st.write(f"Não foi encontrada nenhuma reserva para {nome}.")
     else:
-        print(f'Nenhuma reserva encontrada para o nome {nome}.')
+        for reserva in reservas_encontradas:
+            st.write('Reserva encontrada:')
+            st.write(f"Nome do passageiro: {reserva[0]}")
+            st.write(f"Número do ônibus selecionado: {reserva[1]}")
+            st.write(f"Número do ticket: {reserva[2]}")
+            st.write('---')
+# def editar_reserva(nome):
+#     with open('tickets.txt', 'r') as file:
+#         lines = file.readlines()
 
-def editar_reserva(nome):
-    a = 1
+#     reservas_encontradas = []
+#     indices_reservas = []
+#     for i in range(0, len(lines), 4):
+#         nome_passageiro = lines[i].strip().split(': ')[1]
+#         if nome_passageiro.lower() == nome.lower():
+#             reservas_encontradas.append((nome_passageiro, lines[i+1], lines[i+2]))
+#             indices_reservas.append(i)
 
+#     if len(reservas_encontradas) == 0:
+#         st.write(f"Não foi encontrada nenhuma reserva para {nome}.")
+#     else:
+#         with open('tickets.txt', 'w') as file:
+#             for i, line in enumerate(lines):
+#                 if i not in indices_reservas:
+#                     file.write(line)
+#             for reserva in reservas_encontradas:
+#                 st.write(f"Reserva encontrada para {reserva[0]}:")
+#                 st.write(f"Número do ônibus selecionado: {reserva[1]}")
+#                 st.write(f"Número do ticket: {reserva[2]}")
+#                 st.write('---')
+#                 novo_num_bus = st.text_input("Novo número do ônibus", value=reserva[1].strip().split(': ')[1])
+#                 file.write(f'Nome do passageiro: {reserva[0]}\n')
+#                 file.write(f'Número do ônibus selecionado: {novo_num_bus}\n')
+#                 file.write(f'Número do ticket: {reserva[2]}')
+#                 file.write('\n')
+#             st.write("Reserva atualizada com sucesso.")

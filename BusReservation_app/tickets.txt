@@ -1,8 +1,12 @@
-Nome do passageiro: Caio Moisés
+Nome do passageiro: Caio Moises
 Número do ônibus selecionado: Ônibus 1 - Alexandria-RN -> Natal-RN
-Número do ticket: 35948
+Número do ticket: 48848
 
 Nome do passageiro: Heitor Claudino
-Número do ônibus selecionado: Ônibus 2 - Pau dos Ferros-RN -> Fortaleza-CE
-Número do ticket: 68636
+Número do ônibus selecionado: Ônibus 1 - Alexandria-RN -> Natal-RN
+Número do ticket: 91863
+
+Nome do passageiro: Lucas Emanuel
+Número do ônibus selecionado: Ônibus 1 - Alexandria-RN -> Natal-RN
+Número do ticket: 42069
 

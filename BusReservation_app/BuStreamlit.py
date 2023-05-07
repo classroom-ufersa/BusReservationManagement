@@ -10,7 +10,7 @@ icon_path = 'logo.ico'
 st.set_page_config(page_title=new_title, page_icon=icon_path)
 
 st.sidebar.title('Menu')
-selecionar_pagina = st.sidebar.selectbox('Escolha a opção: ', ['Pagina inicial','Realizar reserva','Excluir reserva', 'Listar reserva', 'Buscar reserva', 'Editar reserva', 'Consultar vagas disponiveis', 'Consultar quantitativos de passageiros'])
+selecionar_pagina = st.sidebar.selectbox('Escolha a opção: ', ['Pagina inicial','Realizar reserva','Excluir reserva', 'Listar reserva', 'Editar reserva', 'Consultar vagas disponiveis', 'Consultar quantitativos de passageiros'])
 
 if selecionar_pagina == 'Pagina inicial':
     st.title('Bem vindos ao seu app de reserva de ônibus')
@@ -32,18 +32,43 @@ if selecionar_pagina == 'Realizar reserva':
         input_enviar = st.form_submit_button('Enviar')
     if input_enviar:
         st.write('Bilhete cadastrado com sucesso!')
-        st.write('Nome do passageiro:', input_name.title())
+        st.write('Nome do passageiro:', input_name.lower().title())
         st.write('Número do ônibus selecionado:', input_numBus)
         st.write('Número do ticket:', num_ticket)
             
-        rst.realizar_reserva(input_name.title(), input_numBus, num_ticket)
+        rst.realizar_reserva(input_name.lower().title(), input_numBus, num_ticket)
+
 if selecionar_pagina == 'Excluir reserva':
     with st.form(key='Passageiro'):
         input_name = st.text_input(label='Nome do passageiro que deseja excluir o bilhete: ')
         input_excluir = st.form_submit_button('Excluir')
 
     if input_excluir:
-        rst.excluir_reserva(input_name.title())
+        rst.excluir_reserva(input_name.lower().title())
+
 if selecionar_pagina == 'Listar reserva':
-    rst.listar_reservas()
-     
+    with st.form(key='buscar'):
+        input_name = st.text_input(label='Buscar nome: ')
+        input_buscar = st.form_submit_button('Buscar')
+
+    if input_buscar:
+        rst.buscar_reservas(input_name.lower().title())
+
+    else: rst.listar_reservas()
+
+# if selecionar_pagina == 'Buscar reserva':
+#     with st.form(key='buscar'):
+#         input_name = st.text_input(label='Buscar nome: ')
+#         input_buscar = st.form_submit_button('Buscar')
+
+#     if input_buscar:
+#         rst.buscar_reservas(input_name.lower().title())
+
+if selecionar_pagina == 'Editar reserva':
+    with st.form(key='editar'):
+        input_name = st.text_input(label='Nome da reserva que deseja editar: ')
+        input_buscar = st.form_submit_button('Buscar')
+        #input_buscar = st.form_submit_button('editar')
+        
+    if input_buscar:
+        rst.editar_reserva(input_name.lower().title())
