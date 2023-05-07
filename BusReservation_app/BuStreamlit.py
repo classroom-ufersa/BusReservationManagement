@@ -53,6 +53,11 @@ if selecionar_pagina == 'Listar reserva':
 
     if input_buscar:
         rst.buscar_reservas(input_name.lower().title())
+        with st.form(key='listar'):
+            st.write('Listar todos!')
+            input_listar = st.form_submit_button('Listar')
+            if input_listar:
+                rst.listar_reservas()
 
     else: rst.listar_reservas()
 
@@ -65,10 +70,11 @@ if selecionar_pagina == 'Listar reserva':
 #         rst.buscar_reservas(input_name.lower().title())
 
 if selecionar_pagina == 'Editar reserva':
-    with st.form(key='editar'):
+    with st.form(key='buscar'):
         input_name = st.text_input(label='Nome da reserva que deseja editar: ')
         input_buscar = st.form_submit_button('Buscar')
-        #input_buscar = st.form_submit_button('editar')
         
     if input_buscar:
-        rst.editar_reserva(input_name.lower().title())
+        rst.buscar_reservas(input_name.lower().title())
+        new_ticket = rd.randint(10000, 99999)
+        rst.editar_reserva(input_name.lower().title(), new_ticket)
