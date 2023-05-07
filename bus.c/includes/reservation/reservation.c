@@ -190,7 +190,7 @@ void searchReservation(Tickets *t, char *name)
     }
     if (!found)
     {
-        printf("\nNome nao cadastrado!\n");
+        printf("Nome nao cadastrado!\n");
     }
 }
 
@@ -291,7 +291,7 @@ Tickets *readFile(Tickets *t, Bus *b)
             printf("Erro na alocacao!\n");
             exit(1);
         }
-        fscanf(f, "Nome: %s\nOrigem: %s\nDestino: %s\nNumero do onibus: %d\n\n", ticket->passengerName, ticket->origin, ticket->destination, &ticket->busNum);
+        fscanf(f, "Nome: %[^\n]\nOrigem: %[^\n]\nDestino: %[^\n]\nNumero do onibus: %d\n\n", ticket->passengerName, ticket->origin, ticket->destination, &ticket->busNum);
         ticket->next = NULL;
         if (head == NULL)
         {
