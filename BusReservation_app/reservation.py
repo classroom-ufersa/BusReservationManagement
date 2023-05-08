@@ -1,4 +1,5 @@
 import streamlit as st
+
 def realizar_reserva(input_name, input_numBus, num_ticket):
     #Formatar a reserva como uma string separada por linhas
     reserva = f'Nome do passageiro: {input_name}\n' \
@@ -79,7 +80,7 @@ def buscar_reservas(nome):
             st.write(f"Número do ticket: {reserva[2]}")
             st.write('---')
 
-def editar_reserva(nome, new_num_ticket):
+def editar_reserva(nome, new_bus,new_num_ticket):
     with open('tickets.txt', 'r') as file:
         lines = file.readlines()
 
@@ -87,16 +88,10 @@ def editar_reserva(nome, new_num_ticket):
         edited = False
         for i in range(0, len(lines), 4):
             if lines[i].strip() == f'Nome do passageiro: {nome}':
-                # Solicitar os novos dados da reserva ao usuário
-                st.write(f"Editando reserva para {nome}:")
-                opcoes_onibus = ['Ônibus 1 - Alexandria-RN -> Natal-RN', 
-                             'Ônibus 2 - Pau dos Ferros-RN -> Fortaleza-CE', 
-                             'Ônibus 3 - Alexandria-RN -> Salvador-Bh']
-                new_num_bus = st.selectbox('Mudança de destino', opcoes_onibus)
 
                 # Escrever os novos dados da reserva no arquivo
                 file.write(f'Nome do passageiro: {nome}\n')
-                file.write(f'Número do ônibus selecionado: {new_num_bus}\n')
+                file.write(f'Número do ônibus selecionado: {new_bus}\n')
                 file.write(f'Número do ticket: {new_num_ticket}\n')
                 file.write(f'\n')
 

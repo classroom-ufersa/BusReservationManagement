@@ -1,0 +1,24 @@
+Nome do passageiro: Abner
+Número do ônibus selecionado: Ônibus 2 - Pau dos Ferros-RN -> Fortaleza-CE
+Número do ticket: 98417
+
+Nome do passageiro: Bruno Fontes
+Nï¿½mero do ï¿½nibus selecionado: ï¿½nibus 1 - Alexandria-RN -> Natal-RN
+Nï¿½mero do ticket: 94217
+
+Nome do passageiro: Caio Moises
+Nï¿½mero do ï¿½nibus selecionado: ï¿½nibus 1 - Alexandria-RN -> Natal-RN
+Nï¿½mero do ticket: 81524
+
+Nome do passageiro: Heitor Claudino
+Número do ônibus selecionado: Ônibus 1 - Alexandria-RN -> Natal-RN
+Número do ticket: 69377
+
+Nome do passageiro: Lucas Emanuel
+Nï¿½mero do ï¿½nibus selecionado: ï¿½nibus 2 - Pau dos Ferros-RN -> Fortaleza-CE
+Nï¿½mero do ticket: 77078
+
+Nome do passageiro: Pedro
+Número do ônibus selecionado: Ônibus 1 - Alexandria-RN -> Natal-RN
+Número do ticket: 10943
+

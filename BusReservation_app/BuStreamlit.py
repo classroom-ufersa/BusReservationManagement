@@ -73,8 +73,13 @@ if selecionar_pagina == 'Editar reserva':
     with st.form(key='buscar'):
         input_name = st.text_input(label='Nome da reserva que deseja editar: ')
         input_buscar = st.form_submit_button('Buscar')
-        
+        opcoes_onibus = ['Ônibus 1 - Alexandria-RN -> Natal-RN', 
+                             'Ônibus 2 - Pau dos Ferros-RN -> Fortaleza-CE', 
+                             'Ônibus 3 - Alexandria-RN -> Salvador-Bh']
+        new_num_bus = st.selectbox('Mudança de destino', opcoes_onibus)
+        input_editar = st.form_submit_button('Editar')
     if input_buscar:
         rst.buscar_reservas(input_name.lower().title())
+    if input_editar:
         new_ticket = rd.randint(10000, 99999)
-        rst.editar_reserva(input_name.lower().title(), new_ticket)
+        rst.editar_reserva(input_name.lower().title(), new_num_bus, new_ticket)
