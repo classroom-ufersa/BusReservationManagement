@@ -175,23 +175,29 @@ void showReservation(Tickets *t, int number)
     int found = 0;
     int alreadyPrinted = 0;
 
-    for (ticket = t; ticket != NULL; ticket = ticket->next)
+    if (t == NULL)
     {
-        if (!alreadyPrinted)
-        {
-            printf("\nPassageiros com reservas no onibus %d\n", number);
-            alreadyPrinted = 1;
-        }
-
-        if (number == ticket->busNum)
-        {
-            printf("\nNome: %s\n", ticket->passengerName);
-            found = 1;
-        }
+        printf("\nLista vazia!\n");
     }
-    if (!found)
+    else
     {
-        printf("\nNumero do onibus inexistente!\n");
+        for (ticket = t; ticket != NULL; ticket = ticket->next)
+        {
+            if (!alreadyPrinted)
+            {
+                printf("\nPassageiros com reservas no onibus %d\n\n", number);
+                alreadyPrinted = 1;
+            }
+            if (number == ticket->busNum)
+            {
+                printf("Nome: %s\n", ticket->passengerName);
+                found = 1;
+            }
+        }
+        if (!found)
+        {
+            printf("\nNumero do onibus inexistente!\n");
+        }
     }
 }
 
@@ -205,7 +211,6 @@ void searchReservation(Tickets *t, char *name)
     {
         exit(1);
     }
-
     for (ticket = t; ticket != NULL; ticket = ticket->next)
     {
 
@@ -236,7 +241,7 @@ void editReservation(Tickets *t, Bus *b, int number)
         exit(1);
     }
 
-    memcpy(aux, t, sizeof(Tickets)); // Copia o conteúdo do bilhete original para a cópia
+    memcpy(aux, t, sizeof(Tickets)); // Copia o conteúdo do bilhete original
     for (bus = b; bus != NULL; bus = bus->next)
     {
         // aumenta a vaga do onibus do qual a reserva sera desfeita

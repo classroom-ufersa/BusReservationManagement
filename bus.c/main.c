@@ -9,7 +9,7 @@ int main()
 {
     Tickets *t = start(); // iniciando a lista de reservas
     Bus *b = startBus();  // iniciando a lista de onibus
-    int option, number, vacancies = 3;
+    int option, number, vacancies = 10;
     char name[50];
 
     printf("--------------------------------------------\n");
@@ -18,6 +18,7 @@ int main()
 
     b = registerBus(b, 1, vacancies, "Alexandria", "Natal");
     b = registerBus(b, 2, vacancies, "Parana", "Uirauna");
+    b = registerBus(b, 3, vacancies, "Pau dosferros", "Ceara");
 
     t = readFile(t, b);
 
@@ -71,7 +72,7 @@ int main()
 
             break;
         case 3:
-            printf("Listando reserva...\n\n");
+            printf("\nListando reserva...\n");
             printf("\nInforme o numero do onibus: ");
             scanf("%d", &number);
 
@@ -91,7 +92,7 @@ int main()
             break;
         case 5:
             printf("\nEditando reserva...\n");
-            printf("\nInforme seu nome: ");
+            printf("\nInforme seu nome completo: ");
             scanf(" %[^\n]s", name);
 
             hasDuplicateSpace(name);
