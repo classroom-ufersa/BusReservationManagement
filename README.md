@@ -4,19 +4,21 @@
 ## Problemática:
     projete um sistema para reserva de passagens de ônibus. Seu sistema precisará manipular ônibus e passageiros.
 
-        Os ônibus devem ter os atributos básicos:
+    Os ônibus devem ter os atributos básicos:
     - número/código;
     - vagas;
     - origem;
     - destino.
 
-        As passagens devem ter: 
+    As passagens devem ter: 
     - nome; 
     - origem;
     - destino;
     - número do ônibus.
 
-- Problemática resolvida utilizando a linguagem C.
+## Tecnologias utilizadas
+- C
+- Python
 
 ## Desenvolvedores:
 👤 [Heitor Claudino Dantas](https://github.com/TIHeitorDS)
@@ -25,11 +27,11 @@
 
 ## Funcionalidades do sistema
 
-#### Realizar reserva
-#### Excluir reserva
-#### Listar reserva
-#### Buscar reserva
-#### Editar reserva
-#### Consultar vagas disponiveis para uma dada origem - destino
-#### Consultar quantitativos de passageiros
-#### Sair
+1. Realizar reserva
+2. Excluir reserva
+3. Listar reserva
+4. Buscar reserva
+5. Editar reserva
+6. Consultar vagas disponiveis para uma dada origem - destino
+7. Consultar quantitativos de passageiros
+8. Sair
