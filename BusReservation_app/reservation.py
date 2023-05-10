@@ -1,10 +1,29 @@
 import streamlit as st
+
 def realizar_reserva(input_name, input_numBus, num_ticket):
-    with open('tickets.txt', 'a+') as file:
-                file.write(f'Nome do passageiro: {input_name}\n')
-                file.write(f'Número do ônibus selecionado: {input_numBus}\n')
-                file.write(f'Número do ticket: {num_ticket}\n')
-                file.write('\n')
+    #Formatar a reserva como uma string separada por linhas
+    reserva = f'Nome do passageiro: {input_name}\n' \
+              f'Número do ônibus selecionado: {input_numBus}\n' \
+              f'Número do ticket: {num_ticket}\n'
+
+    #Ler as reservas existentes do arquivo
+    reservas = []
+    with open('tickets.txt', 'r') as file:
+        reserva_atual = ''
+        for line in file:
+            line = line.strip()
+            if line == '':
+                reservas.append(reserva_atual)
+                reserva_atual = ''
+            else:
+                reserva_atual += line + '\n'
+
+    reservas.append(reserva) #Adicionar nova reserva à lista
+    reservas.sort() #Ordenar a lista em ordem alfabética dos nomes
+
+    with open('tickets.txt', 'w') as file: #Escrever as reservas ordenadas de volta ao arquivo
+        for reserva in reservas:
+            file.write(reserva + '\n')
 def excluir_reserva(nome):
     with open('tickets.txt', 'r') as file:
         lines = file.readlines()
@@ -38,23 +57,49 @@ def listar_reservas():
             st.write(f"Nome do passageiro: {nome}")
             st.write(f"Número do ônibus selecionado: {num_bus}")
             st.write(f"Número do ticket: {num_ticket}")
-            st.write('---')
+            st.write('---')  
 def buscar_reservas(nome):
-    with open('tickets.txt', 'r') as f:
-        linhas = f.readlines() #Lê todas as linhas do arquivo
+    with open('tickets.txt', 'r') as file:
+        lines = file.readlines()
+
     reservas_encontradas = []
-    for i, linha in enumerate(linhas):
-        if nome in linha: #Se o nome estiver na linha, adiciona a linha e as três seguintes à lista de reservas encontradas
-            reservas_encontradas.extend(linhas[i:i+4])
-    if reservas_encontradas:
-        print('Reservas encontradas:')
-        print('---------------------')
-        for reserva in reservas_encontradas:
-            print(reserva.strip()) #Remove o caractere de quebra de linha da string
-        print('---------------------')
+    for i in range(0, len(lines), 4):
+        nome_passageiro = lines[i].strip().split(': ')[1]
+        if nome_passageiro.lower() == nome.lower():
+            num_bus = lines[i+1].strip().split(': ')[1]
+            num_ticket = lines[i+2].strip().split(': ')[1]
+            reservas_encontradas.append((nome_passageiro, num_bus, num_ticket))
+
+    if len(reservas_encontradas) == 0:
+        st.write(f"Não foi encontrada nenhuma reserva para {nome}.")
     else:
-        print(f'Nenhuma reserva encontrada para o nome {nome}.')
+        for reserva in reservas_encontradas:
+            st.write('Reserva encontrada:')
+            st.write(f"Nome do passageiro: {reserva[0]}")
+            st.write(f"Número do ônibus selecionado: {reserva[1]}")
+            st.write(f"Número do ticket: {reserva[2]}")
+            st.write('---')
+def editar_reserva(nome, new_bus,new_num_ticket):
+    with open('tickets.txt', 'r') as file:
+        lines = file.readlines()
 
-def editar_reserva(nome):
-    a = 1
+    with open('tickets.txt', 'w') as file:
+        edited = False
+        for i in range(0, len(lines), 4):
+            if lines[i].strip() == f'Nome do passageiro: {nome}':
 
+                # Escrever os novos dados da reserva no arquivo
+                file.write(f'Nome do passageiro: {nome}\n')
+                file.write(f'Número do ônibus selecionado: {new_bus}\n')
+                file.write(f'Número do ticket: {new_num_ticket}\n')
+                file.write(f'\n')
+
+                edited = True
+            else:
+                file.write(lines[i])
+                file.write(lines[i+1])
+                file.write(lines[i+2])
+                file.write(lines[i+3])
+
+    if edited:
+        st.write(f"A reserva para {nome} foi editada com sucesso.")
