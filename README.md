@@ -1,7 +1,9 @@
 <h1 align="center"> Bus Reservation Service 
 </h1>
 
-<img src="BusReservation_app\logo.png" />
+<div style="width: 50%; margin-inline: auto">
+    <img src="BusReservation_app\logo.png" />
+</div>
 
 ## Languages:
 - [Português](#problemática)
