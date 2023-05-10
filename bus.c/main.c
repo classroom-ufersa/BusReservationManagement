@@ -18,6 +18,7 @@ int main()
 
     b = registerBus(b, 1, vacancies, "Alexandria", "Natal");
     b = registerBus(b, 2, vacancies, "Parana", "Uirauna");
+    b = registerBus(b, 3, vacancies, "Pau dosferros", "Ceara");
 
     t = readFile(t, b);
 
@@ -41,13 +42,11 @@ int main()
         {
         case 1:
             printf("\nRealizando reserva...\n");
-            printf("Informe seu nome: ");
+            printf("\nInforme seu nome completo: ");
             scanf(" %[^\n]s", name);
 
-            // converte o primeiro caractere do nome para maiúsculo
-            firstChar = name[0]; //Obtém o primeiro caractere do nome do passageiro
-            firstCharUpper = toupper(firstChar); //Converte o primeiro caractere para maiúsculo
-            name[0] = firstCharUpper; //Atualiza o primeiro caractere do nome com a versão maiúscula
+            hasDuplicateSpace(name);
+            formatText(name); // trantando o nome
 
             showBus(b); // mostra os onibus disponiveis para reserva
 
@@ -57,19 +56,15 @@ int main()
             t = makeReservation(t, b, number, name);
 
             writeFile(t);
-
-            printf("\nReserva realizada com sucesso!\n");
-
+            
             break;
         case 2:
             printf("\nExcluindo reserva...\n");
-            printf("\nInforme seu nome: ");
+            printf("\nInforme seu nome completo: ");
             scanf(" %[^\n]s", name);
 
-            // converte o primeiro caractere do nome para maiúsculo
-            firstChar = name[0];
-            firstCharUpper = toupper(firstChar);
-            name[0] = firstCharUpper;
+            hasDuplicateSpace(name);
+            formatText(name); // trantando o nome
 
             t = deleteReservation(t, b, name);
 
@@ -77,35 +72,31 @@ int main()
 
             break;
         case 3:
-            printf("Listando reserva...\n\n");
-            printf("Informe o numero do onibus: ");
+            printf("\nListando reserva...\n");
+            printf("\nInforme o numero do onibus: ");
             scanf("%d", &number);
 
             showReservation(t, number);
 
             break;
         case 4:
-            printf("Buscando reserva...\n\n");
-            printf("Informe seu nome: ");
+            printf("\nBuscando reserva...\n");
+            printf("\nInforme seu nome completo: ");
             scanf(" %[^\n]s", name);
 
-            // converte o primeiro caractere do nome para maiúsculo
-            firstChar = name[0];
-            firstCharUpper = toupper(firstChar);
-            name[0] = firstCharUpper;
+            hasDuplicateSpace(name);
+            formatText(name); // trantando o nome
 
             searchReservation(t, name);
 
             break;
         case 5:
             printf("\nEditando reserva...\n");
-            printf("\nInforme seu nome: ");
+            printf("\nInforme seu nome completo: ");
             scanf(" %[^\n]s", name);
 
-            // converte o primeiro caractere do nome para maiúsculo
-            firstChar = name[0];
-            firstCharUpper = toupper(firstChar);
-            name[0] = firstCharUpper;
+            hasDuplicateSpace(name);
+            formatText(name);// trantando o nome
 
             int found = 0;
             Tickets *ticket = NULL;
@@ -133,21 +124,21 @@ int main()
 
             break;
         case 6:
-            printf("Consultando vagas disponiveis...\n\n");
-            printf("Informe o numero do onibus: ");
+            printf("\nConsultando vagas disponiveis...\n");
+            printf("\nInforme o numero do onibus: ");
             scanf("%d", &number);
 
             showAvaliableVacancies(b, number);
             break;
         case 7:
-            printf("Consultando quantitativos de passageiros...\n\n");
-            printf("Informe o numero do onibus: ");
+            printf("\nConsultando quantitativos de passageiros...\n");
+            printf("\nInforme o numero do onibus: ");
             scanf("%d", &number);
 
             showPassengerQuantity(b, vacancies, number);
             break;
         case 8:
-            printf("Saindo...\n");
+            printf("\nSaindo...\n");
 
             freeBus(b);
             freeTickets(t);

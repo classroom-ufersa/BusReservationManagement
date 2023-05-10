@@ -16,6 +16,53 @@ Tickets *start() // função para criar uma nova instância da estrutura ticket 
     return NULL;
 }
 
+void hasDuplicateSpace(char *name)
+{
+    int i, j;
+    int space = 0;
+    int nameSize = strlen(name);
+
+    // Eliminando espaços extras
+    for (i = 0, j = 0; i < nameSize; i++)
+    {
+        if (isspace(name[i]))
+        {
+            if (space == 0)
+            {
+                name[j++] = name[i]; // Atribuindo apenas um espaço ao nome
+                space = 1;
+            }
+        }
+        else
+        {
+            name[j++] = name[i]; // Criando uma cópia do nome
+            space = 0;
+        }
+    }
+    name[j] = '\0';
+}
+
+void formatText(char *name)
+{
+    int i = 0;
+    int capitalizeNext = 1;
+
+    while (name[i])
+    {
+        if (capitalizeNext && islower(name[i]))
+        {
+            name[i] = toupper(name[i]);
+        }
+        else if (!capitalizeNext && isupper(name[i]))
+        {
+            name[i] = tolower(name[i]);
+        }
+
+        capitalizeNext = (name[i] == ' ');
+        i++;
+    }
+}
+
 Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função para criar um novo bilhete e adicioná-lo à Tickets encadeada de bilhetes
 {
     Tickets *ticket = (Tickets *)malloc(sizeof(Tickets));
@@ -33,8 +80,9 @@ Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função
     {
         if (number == bus->number) // verifica se o numero do onibus é existe e atribui os valores à passagem
         {
-            if(bus->vacancies == 0){
-                printf("As vagas deste onibus esgotou!");
+            if (bus->vacancies == 0)
+            {
+                printf("\nAs vagas deste onibus esgotou!\n");
                 return t;
             }
             strcpy(ticket->origin, bus->origin);
@@ -65,11 +113,14 @@ Tickets *makeReservation(Tickets *t, Bus *b, int number, char *name) // função
     }
     ticket->next = current;
 
+    printf("\nReserva realizada com sucesso!\n");
+
     return t;
 }
 
 Tickets *deleteReservation(Tickets *t, Bus *b, char *name)
 {
+    Bus *bus = b;
     Tickets *prev = NULL;
     Tickets *ticket = t;
     if (ticket == NULL)
@@ -77,8 +128,6 @@ Tickets *deleteReservation(Tickets *t, Bus *b, char *name)
         printf("\nLista vazia!\n");
         return t;
     }
-
-    Bus *bus = b;
 
     while (ticket != NULL && strcmp(ticket->passengerName, name) != 0)
     {
@@ -126,23 +175,29 @@ void showReservation(Tickets *t, int number)
     int found = 0;
     int alreadyPrinted = 0;
 
-    for (ticket = t; ticket != NULL; ticket = ticket->next)
+    if (t == NULL)
     {
-        if (!alreadyPrinted)
-        {
-            printf("\nPassageiros com reservas no onibus %d\n", number);
-            alreadyPrinted = 1;
-        }
-
-        if (number == ticket->busNum)
-        {
-            printf("Nome: %s\n", ticket->passengerName);
-            found = 1;
-        }
+        printf("\nLista vazia!\n");
     }
-    if (!found)
+    else
     {
-        printf("\nNumero do onibus inexistente!\n");
+        for (ticket = t; ticket != NULL; ticket = ticket->next)
+        {
+            if (!alreadyPrinted)
+            {
+                printf("\nPassageiros com reservas no onibus %d\n\n", number);
+                alreadyPrinted = 1;
+            }
+            if (number == ticket->busNum)
+            {
+                printf("Nome: %s\n", ticket->passengerName);
+                found = 1;
+            }
+        }
+        if (!found)
+        {
+            printf("\nNumero do onibus inexistente!\n");
+        }
     }
 }
 
@@ -150,6 +205,7 @@ void searchReservation(Tickets *t, char *name)
 {
     int found = 0;
     int alreadyPrinted = 0;
+
     Tickets *ticket = (Tickets *)malloc(sizeof(Tickets));
     if (ticket == NULL)
     {
@@ -157,14 +213,15 @@ void searchReservation(Tickets *t, char *name)
     }
     for (ticket = t; ticket != NULL; ticket = ticket->next)
     {
-        if (!alreadyPrinted)
-        {
-            printf("Informacoes de sua reserva:\n");
-            alreadyPrinted = 1;
-        }
+
         if (strcmp(ticket->passengerName, name) == 0)
         {
-            printf("\nNome: %s\nNumero do onibus: %d\nOrigem: %s\nDestino: %s\n", ticket->passengerName, ticket->busNum, ticket->origin, ticket->destination);
+            if (!alreadyPrinted)
+            {
+                printf("\nInformacoes de sua reserva:\n\n");
+                alreadyPrinted = 1;
+            }
+            printf("Nome: %s\nNumero do onibus: %d\nOrigem: %s\nDestino: %s\n", ticket->passengerName, ticket->busNum, ticket->origin, ticket->destination);
             found = 1;
         }
     }
@@ -178,8 +235,13 @@ void editReservation(Tickets *t, Bus *b, int number)
 {
     Bus *bus = NULL;
     int found = 0;
-    Tickets *aux = NULL;
-    aux = t;
+    Tickets *aux = (Tickets *)malloc(sizeof(Tickets)); // Aloca memória para uma cópia do bilhete original
+    if (aux == NULL)
+    {
+        exit(1);
+    }
+
+    memcpy(aux, t, sizeof(Tickets)); // Copia o conteúdo do bilhete original
     for (bus = b; bus != NULL; bus = bus->next)
     {
         // aumenta a vaga do onibus do qual a reserva sera desfeita
@@ -190,13 +252,20 @@ void editReservation(Tickets *t, Bus *b, int number)
         // verificando o elemento o qual contem o mesmo numero/codigo do onibus
         if (bus->number == number)
         {
+            // Verificando se há vagas no onibus
+            found = 1;
+            if (bus->vacancies == 0)
+            {
+                printf("\nAs vagas deste onibus esgotou!\n");
+                break;
+            }
             strcpy(t->origin, bus->origin);
             strcpy(t->destination, bus->destination);
             t->busNum = bus->number;
 
             bus->vacancies--;
 
-            found = 1;
+            printf("\nEdicao realizada com sucesso!\n");
         }
     }
 
@@ -204,10 +273,7 @@ void editReservation(Tickets *t, Bus *b, int number)
     {
         printf("\nNumero de onibus nao encontrado!\n");
     }
-    else
-    {
-        printf("\nEdicao realizada com sucesso!\n");
-    }
+    free(aux);
 }
 
 void writeFile(Tickets *t)
@@ -262,7 +328,7 @@ Tickets *readFile(Tickets *t, Bus *b)
             printf("Erro na alocacao!\n");
             exit(1);
         }
-        fscanf(f, "Nome: %s\nOrigem: %s\nDestino: %s\nNumero do onibus: %d\n\n", ticket->passengerName, ticket->origin, ticket->destination, &ticket->busNum);
+        fscanf(f, "Nome: %[^\n]\nOrigem: %[^\n]\nDestino: %[^\n]\nNumero do onibus: %d\n\n", ticket->passengerName, ticket->origin, ticket->destination, &ticket->busNum);
         ticket->next = NULL;
         if (head == NULL)
         {
