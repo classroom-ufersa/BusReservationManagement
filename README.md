@@ -1,7 +1,7 @@
 <h1 align="center"> Bus Reservation Service 
 </h1>
 
-<div style="width: 50%; margin-inline: auto">
+<div align ="center">
     <img src="BusReservation_app\logo.png" />
 </div>
 
