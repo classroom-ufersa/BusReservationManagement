@@ -79,7 +79,6 @@ def buscar_reservas(nome):
             st.write(f"Número do ônibus selecionado: {reserva[1]}")
             st.write(f"Número do ticket: {reserva[2]}")
             st.write('---')
-
 def editar_reserva(nome, new_bus,new_num_ticket):
     with open('tickets.txt', 'r') as file:
         lines = file.readlines()
@@ -104,5 +103,3 @@ def editar_reserva(nome, new_bus,new_num_ticket):
 
     if edited:
         st.write(f"A reserva para {nome} foi editada com sucesso.")
-    # else:
-    #     st.write(f"Não foi encontrada uma reserva para {nome}.")

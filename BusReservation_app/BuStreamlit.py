@@ -10,7 +10,7 @@ icon_path = 'logo.ico'
 st.set_page_config(page_title=new_title, page_icon=icon_path)
 
 st.sidebar.title('Menu')
-selecionar_pagina = st.sidebar.selectbox('Escolha a opção: ', ['Pagina inicial','Realizar reserva','Excluir reserva', 'Listar reserva', 'Editar reserva', 'Consultar vagas disponiveis', 'Consultar quantitativos de passageiros'])
+selecionar_pagina = st.sidebar.selectbox('Escolha a opção: ', ['Pagina inicial','Realizar reserva','Excluir reserva', 'Listar reserva', 'Editar reserva'])
 
 if selecionar_pagina == 'Pagina inicial':
     st.title('Bem vindos ao seu app de reserva de ônibus')
@@ -29,7 +29,7 @@ if selecionar_pagina == 'Realizar reserva':
 
         input_name = st.text_input(label='Nome do passageiro')
         input_numBus = st.selectbox('Número do ônibus e destino', opcoes_onibus)
-        input_enviar = st.form_submit_button('Enviar')
+        input_enviar = st.form_submit_button('Cadastrar')
     if input_enviar:
         st.write('Bilhete cadastrado com sucesso!')
         st.write('Nome do passageiro:', input_name.lower().title())
