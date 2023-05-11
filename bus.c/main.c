@@ -10,7 +10,7 @@ int main()
     Tickets *t = start(); // iniciando a lista de reservas
     Bus *b = startBus();  // iniciando a lista de onibus
     int option, number, vacancies = 10;
-    char name[50];
+    char name[50], firstChar, firstCharUpper;
 
     printf("--------------------------------------------\n");
     printf("Boas vindas ao sistema de reserva de onibus!\n");
