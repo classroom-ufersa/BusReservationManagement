@@ -1,6 +1,6 @@
 Nome do passageiro: Caio Moises
-Número do ônibus selecionado: Ônibus 1 - Alexandria-RN -> Natal-RN
-Número do ticket: 50925
+Número do ônibus selecionado: Ônibus 2 - Pau dos Ferros-RN -> Fortaleza-CE
+Número do ticket: 49672
 
 Nome do passageiro: Heitor Claudino
 Número do ônibus selecionado: Ônibus 2 - Pau dos Ferros-RN -> Fortaleza-CE
