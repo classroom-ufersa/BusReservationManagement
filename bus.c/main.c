@@ -42,6 +42,11 @@ int main()
         {
         case 1:
             printf("\nRealizando reserva...\n");
+            if (b == NULL)
+            {
+                printf("\nNao ha onibus cadastrados!\n");
+                break;
+            }
             printf("\nInforme seu nome completo: ");
             scanf(" %[^\n]s", name);
 
@@ -56,7 +61,7 @@ int main()
             t = makeReservation(t, b, number, name);
 
             writeFile(t);
-            
+
             break;
         case 2:
             printf("\nExcluindo reserva...\n");
@@ -96,7 +101,7 @@ int main()
             scanf(" %[^\n]s", name);
 
             hasDuplicateSpace(name);
-            formatText(name);// trantando o nome
+            formatText(name); // trantando o nome
 
             int found = 0;
             Tickets *ticket = NULL;
